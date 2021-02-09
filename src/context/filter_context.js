@@ -11,16 +11,19 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 import { useProductsContext } from './products_context'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
 
 const initialState = {}
 
-const FilterContext = React.createContext()
+const FilterContext = createStore(reducer, initialState)
 
 export const FilterProvider = ({ children }) => {
   return (
-    <FilterContext.Provider value='filter context'>
+    <Provider store={FilterContext}>
       {children}
-    </FilterContext.Provider>
+    </Provider>
   )
 }
 // make sure use

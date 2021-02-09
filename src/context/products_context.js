@@ -12,16 +12,18 @@ import {
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 const initialState = {}
 
-const ProductsContext = React.createContext()
+const ProductsContext = createStore(reducer, initialState)
 
 export const ProductsProvider = ({ children }) => {
   return (
-    <ProductsContext.Provider value='products context'>
+    <Provider store={ProductsContext}>
       {children}
-    </ProductsContext.Provider>
+    </Provider>
   )
 }
 // make sure use

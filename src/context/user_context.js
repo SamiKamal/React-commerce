@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-const UserContext = React.createContext()
+const UserContext = createStore()
 export const UserProvider = ({ children }) => {
   return (
-    <UserContext.Provider value='user context'>{children}</UserContext.Provider>
+    <Provider store={UserContext}>{children}</Provider>
   )
 }
 // make sure use

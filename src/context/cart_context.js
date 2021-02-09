@@ -7,14 +7,16 @@ import {
   CLEAR_CART,
   COUNT_CART_TOTALS,
 } from '../actions'
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 const initialState = {}
 
-const CartContext = React.createContext()
+const CartContext = createStore(reducer, initialState)
 
 export const CartProvider = ({ children }) => {
   return (
-    <CartContext.Provider value='cart context'>{children}</CartContext.Provider>
+    <Provider store={CartContext}>{children}</Provider>
   )
 }
 // make sure use
