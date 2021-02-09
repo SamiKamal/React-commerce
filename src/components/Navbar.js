@@ -7,9 +7,25 @@ import { links } from '../utils/constants'
 import CartButtons from './CartButtons'
 import { useProductsContext } from '../context/products_context'
 import { useUserContext } from '../context/user_context'
+import { Navbar } from '.'
 
 const Nav = () => {
-  return <h4>navbar</h4>
+  return (
+  <NavContainer>
+    <div className="nav-center">
+      <div className="nav-header">
+        <Link to="/"><img src={logo} alt="company logo"/></Link>
+        <button className="nav-toggle"><FaBars/></button>
+      </div>
+      <ul className="nav-links">
+        {links.map(link => (
+          <li key={link.id}><Link to={link.url}>{link.text}</Link></li>
+        ))}
+      </ul>
+      <CartButtons className="cart-btn-wrapper"/>
+    </div>
+  </NavContainer>
+    )
 }
 
 const NavContainer = styled.nav`
