@@ -8,21 +8,23 @@ import CartButtons from './CartButtons'
 import { useProductsContext } from '../context/products_context'
 import { useUserContext } from '../context/user_context'
 import { Navbar } from '.'
+import { SIDEBAR_OPEN } from '../actions'
+import { connect } from 'react-redux'
 
-const Nav = () => {
+const Nav = ({openSidebar}) => {
   return (
   <NavContainer>
     <div className="nav-center">
       <div className="nav-header">
         <Link to="/"><img src={logo} alt="company logo"/></Link>
-        <button className="nav-toggle"><FaBars/></button>
+        <button className="nav-toggle" onClick={() => openSidebar()}><FaBars/></button>
       </div>
       <ul className="nav-links">
         {links.map(link => (
           <li key={link.id}><Link to={link.url}>{link.text}</Link></li>
         ))}
       </ul>
-      <CartButtons className="cart-btn-wrapper"/>
+      <CartButtons/>
     </div>
   </NavContainer>
     )
@@ -95,4 +97,7 @@ const NavContainer = styled.nav`
   }
 `
 
-export default Nav
+const mapDispatchToProps = dispatch => {
+  return {openSidebar: ()=> dispatch({type: SIDEBAR_OPEN})}
+}
+export default connect(null, mapDispatchToProps)(Nav)

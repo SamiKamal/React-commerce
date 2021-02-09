@@ -7,9 +7,26 @@ import { links } from '../utils/constants'
 import styled from 'styled-components'
 import CartButtons from './CartButtons'
 import { useUserContext } from '../context/user_context'
+import { connect } from 'react-redux'
+import { SIDEBAR_CLOSE } from '../actions'
 
-const Sidebar = () => {
-  return <h4>sidebar</h4>
+const Sidebar = ({closeSidebar, isSidebarOpen}) => {
+  return (
+    <SidebarContainer>
+      <aside className={`sidebar ${isSidebarOpen ? 'show-sidebar' : 'hide-sidebar' }`}>
+        <div className="sidebar-header">
+          <img src={logo} alt="company logo" className="logo"/>
+          <button className="close-btn" onClick={()=> closeSidebar()}><FaTimes/></button>
+        </div>
+        <ul className="links">
+        {links.map(link => (
+          <li key={link.id}><Link to={link.url}>{link.text}</Link></li>
+        ))}
+        </ul>
+        <CartButtons/>
+      </aside>
+    </SidebarContainer>
+  )
 }
 
 const SidebarContainer = styled.div`
@@ -83,4 +100,10 @@ const SidebarContainer = styled.div`
   }
 `
 
-export default Sidebar
+const mapDispatchToProps = dispatch => {
+  return {closeSidebar: () => dispatch({type: SIDEBAR_CLOSE})}
+}
+const mapStateToProps = state => {
+  return {isSidebarOpen: state.isSidebarOpen}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

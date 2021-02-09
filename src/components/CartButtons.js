@@ -8,7 +8,7 @@ import { useUserContext } from '../context/user_context'
 
 const CartButtons = () => {
   return (
-    <Wrapper>
+    <Wrapper className="cart-btn-wrapper">
       <Link className="cart-btn" to="/cart">
         Cart
         <div className="cart-container">
