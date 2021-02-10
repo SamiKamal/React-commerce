@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useContext, useEffect, useReducer } from 'react'
 import reducer from '../reducers/products_reducer'
 import { products_url as url } from '../utils/constants'
@@ -15,7 +14,7 @@ import {
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-const initialState = {isSidebarOpen: false}
+const initialState = {isSidebarOpen: false, products: []}
 
 const ProductsContext = createStore(reducer, initialState)
 

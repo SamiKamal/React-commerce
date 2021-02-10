@@ -16,6 +16,10 @@ const products_reducer = (state, action) => {
     return {...state, isSidebarOpen: true}
   } else if (type === SIDEBAR_CLOSE){
     return {...state, isSidebarOpen: false}
+  } else if (type === GET_PRODUCTS_BEGIN){
+    return {...state, isLoding: true}
+  } else if (type === GET_PRODUCTS_SUCCESS){
+    return {...state, isLoading: false, products: payload}
   }
   return state
   throw new Error(`No Matching "${action.type}" - action type`)

@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import axios from 'axios'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 import { Filters, ProductList, Sort, PageHero } from '../components'
+import {
+  GET_PRODUCTS_SUCCESS,
+} from '../actions'
+import { products_url as url } from '../utils/constants'
 
-const ProductsPage = () => {
-  return <h4>products page</h4>
+const ProductsPage = ({getProductsDone}) => {
+  useEffect(() => {
+    axios.get(url).then(el => getProductsDone(el.data))
+  })
+  getProductsDone()
+  return (
+    <main>
+      <PageHero/>
+      <Wrapper className="page">
+        <div className="section-center products">
+          <Filters/>
+          <div>
+            <Sort/>
+            <ProductList/>
+          </div>
+        </div>
+      </Wrapper>
+    </main>
+
+  )
 }
 
 const Wrapper = styled.div`
@@ -18,5 +42,10 @@ const Wrapper = styled.div`
     }
   }
 `
+const mapDispatchtToProps = dispatch => {
+  return {
+    getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
+  }
+}
 
-export default ProductsPage
+export default connect(null, mapDispatchtToProps)(ProductsPage)
