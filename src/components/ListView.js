@@ -12,7 +12,7 @@ const ListView = ({products}) => {
             <h4>{el.name}</h4>
             <h5 className="price">{el.price}</h5>
             <p>{el.description.substring(0,150)}...</p>
-            <Link className="btn" to={`/products/:id`}>Details</Link>
+            <Link className="btn" to={`/products/${el.id}`}>Details</Link>
           </div>
         </article>
       ))}

@@ -1,8 +1,30 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import Loading from './Loading'
 
-const ProductImages = () => {
-  return <h4>product images</h4>
+const ProductImages = ({images}) => {
+  const [mainImage, setMainImage] = useState(images)
+  useEffect(()=> {
+    if (images){
+      setMainImage(images[0].url)
+    }
+  }, [images])
+  if (images){
+    const handleClick = e => {
+      setMainImage(e.target.src)
+    }
+    return (
+      <Wrapper>
+        <img src={mainImage} alt="img of product" className="main"/>
+        <div className="gallery">{mainImage && images.map(image => (
+          <img src={image.url} key={image.id} alt="a simple furniture" onClick={handleClick} className={image.url === mainImage ? 'active' : 'null'}/>
+        ))}</div>
+      </Wrapper>
+    )
+
+  } else{
+    return <Loading></Loading>
+  }
 }
 
 const Wrapper = styled.section`
@@ -51,3 +73,5 @@ const Wrapper = styled.section`
 `
 
 export default ProductImages
+// when user click change style
+// and set the main image to be the one the user clicked

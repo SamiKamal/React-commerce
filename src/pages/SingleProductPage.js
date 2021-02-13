@@ -11,11 +11,44 @@ import {
   Stars,
   PageHero,
 } from '../components'
+import {
+  GET_SINGLE_PRODUCT_BEGIN,
+  GET_SINGLE_PRODUCT_SUCCESS,
+  GET_SINGLE_PRODUCT_ERROR,
+} from '../actions'
+
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
-const SingleProductPage = () => {
-  return <h4>single product page</h4>
+const SingleProductPage = ({getProductsDone, singleProduct}) => {
+  const {id} = useParams()
+  useEffect(() => {
+    axios.get(url+id).then(el => getProductsDone(el.data))
+  }, [])
+  console.log(singleProduct);
+
+  return (
+    <Wrapper>
+    <PageHero/>
+    <div className="section section-center page">
+      <Link className="btn" to="/products">back to products</Link>
+      <div className="product-center">
+        <ProductImages images={singleProduct.images}/>
+        <section className="content">
+          <h2>{singleProduct.name}</h2>
+          <Stars/>
+          <h5 className="price">{singleProduct.price}</h5>
+          <p className="desc">{singleProduct.description}</p>
+          <p className="info"><span>Available: </span> {singleProduct.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
+          <p className="info"><span>SKU: </span> {singleProduct.id}</p>
+          <p className="info"><span>Brand: </span> {singleProduct.company}</p>
+        </section>
+      </div>
+    </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.main`
@@ -52,4 +85,14 @@ const Wrapper = styled.main`
   }
 `
 
-export default SingleProductPage
+const mapDispatchtToProps = dispatch => {
+  return {
+    getProductsDone: (products) => dispatch({type: GET_SINGLE_PRODUCT_SUCCESS, payload: products})
+  }
+}
+
+const mapStateToProps = state => {
+  return state
+}
+
+export default connect(mapStateToProps, mapDispatchtToProps)(SingleProductPage);

@@ -12,7 +12,7 @@ const ProductsPage = ({getProductsDone}) => {
   useEffect(() => {
     axios.get(url).then(el => getProductsDone(el.data))
   })
-  getProductsDone()
+  // getProductsDone()
   return (
     <main>
       <PageHero/>
