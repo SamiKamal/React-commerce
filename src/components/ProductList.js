@@ -18,7 +18,10 @@ import { connect } from 'react-redux'
 
 const ProductList = ({state}) => {
   return (
-    <GridView products={state.products}/>
+    <>
+      <GridView products={state.products}/>
+      {/* <ListView products={state.products}/> */}
+    </>
   )
 }
 
