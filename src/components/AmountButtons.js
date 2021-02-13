@@ -1,9 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 
-const AmountButtons = () => {
-  return <h4>amount buttons </h4>
+const AmountButtons = ({stock}) => {
+  const [numItem, setNumItem] = useState(1)
+  const increaseCart = e => {
+    if (numItem < stock){
+      setNumItem((prev)=> {
+        return prev + 1
+      })
+    }
+  }
+
+  const decreaseCart = e => {
+    if (numItem > 1){
+      setNumItem((prev)=> {
+        return prev - 1
+      })
+    }
+
+  }
+
+  return (
+    <Wrapper className="amount-btns">
+     <button className="amount-btn" onClick={decreaseCart}><FaMinus /></button>
+      <h2 className="amount">{numItem}</h2>
+      <button className="amount-btn" onClick={increaseCart}><FaPlus /></button>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`

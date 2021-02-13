@@ -29,6 +29,10 @@ const SingleProductPage = ({getProductsDone, singleProduct}) => {
   }, [])
   console.log(singleProduct);
 
+  if (!singleProduct){
+    return <Loading/>
+  }
+  
   return (
     <Wrapper>
     <PageHero/>
@@ -44,6 +48,7 @@ const SingleProductPage = ({getProductsDone, singleProduct}) => {
           <p className="info"><span>Available: </span> {singleProduct.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
           <p className="info"><span>SKU: </span> {singleProduct.id}</p>
           <p className="info"><span>Brand: </span> {singleProduct.company}</p>
+          <AddToCart colors={singleProduct.colors} stock={singleProduct.stock}/>
         </section>
       </div>
     </div>
