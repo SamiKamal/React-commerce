@@ -19,13 +19,13 @@ const products_reducer = (state, action) => {
     return {...state, isSidebarOpen: false}
 
   } else if (type === GET_PRODUCTS_BEGIN){
-    return {...state, isLoding: true, products: []}
+    return {...state, isLoading: true, products: []}
 
   } else if (type === GET_PRODUCTS_SUCCESS){
     return {...state, isLoading: false, products: payload}
 
   } else if (type === GET_SINGLE_PRODUCT_BEGIN){
-    return {...state, isLoding: true, singleProduct: {}}
+    return {...state, isLoading: true, singleProduct: {}}
 
   } else if (type === GET_SINGLE_PRODUCT_SUCCESS){
     return {...state, isLoading: false, singleProduct: payload}

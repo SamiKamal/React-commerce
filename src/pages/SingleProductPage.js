@@ -22,14 +22,14 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-const SingleProductPage = ({getProductsDone, singleProduct}) => {
+const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProductsStarted}) => {
   const {id} = useParams()
   useEffect(() => {
+    getProductsStarted()
     axios.get(url+id).then(el => getProductsDone(el.data))
   }, [])
-  console.log(singleProduct);
 
-  if (!singleProduct){
+  if (!singleProduct.name){
     return <Loading/>
   }
   
@@ -92,12 +92,16 @@ const Wrapper = styled.main`
 
 const mapDispatchtToProps = dispatch => {
   return {
+    getProductsStarted: ()=> dispatch({type: GET_SINGLE_PRODUCT_BEGIN}),
     getProductsDone: (products) => dispatch({type: GET_SINGLE_PRODUCT_SUCCESS, payload: products})
   }
 }
 
 const mapStateToProps = state => {
-  return state
+  return {
+    singleProduct: state.singleProduct,
+    isLoading: state.isLoading
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchtToProps)(SingleProductPage);

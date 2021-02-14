@@ -14,7 +14,7 @@ import {
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-const initialState = {isSidebarOpen: false, products: [], singleProduct: {}}
+const initialState = {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false}
 
 const ProductsContext = createStore(reducer, initialState)
 

@@ -2,17 +2,23 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Filters, ProductList, Sort, PageHero } from '../components'
+import { Filters, ProductList, Sort, PageHero, Loading } from '../components'
 import {
+  GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 
-const ProductsPage = ({getProductsDone}) => {
+const ProductsPage = ({getProductsDone, getProductsStarted, isLoading}) => {
   useEffect(() => {
+    getProductsStarted()
     axios.get(url).then(el => getProductsDone(el.data))
-  })
+  }, [])
   // getProductsDone()
+  if (isLoading){
+    <Loading/>
+  }
+
   return (
     <main>
       <PageHero/>
@@ -44,8 +50,16 @@ const Wrapper = styled.div`
 `
 const mapDispatchtToProps = dispatch => {
   return {
+    getProductsStarted: ()=> dispatch({type: GET_PRODUCTS_BEGIN}),
     getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
   }
 }
 
-export default connect(null, mapDispatchtToProps)(ProductsPage)
+const mapStateToProps = state => {
+  return {
+    isLoading: state.isLoading,
+    products: state.products
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchtToProps)(ProductsPage)

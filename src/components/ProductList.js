@@ -17,7 +17,7 @@ import { products_url as url } from '../utils/constants'
 import { connect } from 'react-redux'
 
 const ProductList = ({state}) => {
-  return (
+  return (  
     <>
       <GridView products={state.products}/>
       {/* <ListView products={state.products}/> */}
