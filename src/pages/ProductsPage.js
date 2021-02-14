@@ -16,7 +16,7 @@ const ProductsPage = ({getProductsDone, getProductsStarted, isLoading}) => {
   }, [])
   // getProductsDone()
   if (isLoading){
-    <Loading/>
+    return <Loading/>
   }
 
   return (
