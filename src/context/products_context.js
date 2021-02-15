@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useReducer } from 'react'
-import reducer from '../reducers/products_reducer'
+import {products_reducer} from '../reducers/products_reducer'
+import {cart_reducer} from '../reducers/cart_reducer'
+import {filter_reducer} from '../reducers/filter_reducer'
+
 import { products_url as url } from '../utils/constants'
 import {
   SIDEBAR_OPEN,
@@ -11,13 +14,13 @@ import {
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 const initialState = {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false}
-
-const ProductsContext = createStore(reducer, initialState)
-
+const rootReducers = combineReducers({products: products_reducer, cart: cart_reducer, filter: filter_reducer})
+const ProductsContext = createStore(rootReducers, initialState)
+console.log(ProductsContext)
 export const ProductsProvider = ({ children }) => {
   return (
     <Provider store={ProductsContext}>

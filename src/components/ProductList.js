@@ -15,20 +15,22 @@ import {
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 import { connect } from 'react-redux'
+import Loading from './Loading'
 
-const ProductList = ({state}) => {
+const ProductList = ({products}) => {
+  if (!products.products.length) return <Loading/>
   return (  
     <>
-      <GridView products={state.products}/>
+      <GridView products={products.products}/>
       {/* <ListView products={state.products}/> */}
     </>
   )
 }
 
 
-const mapStateToProps = state => {
+const mapStateToProps = ({products}) => {
   return {
-    state
+    products
   }
 }
 export default connect(mapStateToProps)(ProductList)

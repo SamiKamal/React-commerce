@@ -29,7 +29,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
     axios.get(url+id).then(el => getProductsDone(el.data))
   }, [])
   console.log(singleProduct);
-  if (!singleProduct.name){
+  if (!singleProduct){
     return <Loading/>
   }
   
@@ -48,7 +48,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
           <p className="info"><span>Available: </span> {singleProduct.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
           <p className="info"><span>SKU: </span> {singleProduct.id}</p>
           <p className="info"><span>Brand: </span> {singleProduct.company}</p>
-          <AddToCart colors={singleProduct.colors} stock={singleProduct.stock}/>
+          <AddToCart colors={singleProduct.colors} isLoading={isLoading} stock={singleProduct.stock}/>
         </section>
       </div>
     </div>
@@ -97,10 +97,10 @@ const mapDispatchtToProps = dispatch => {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({products}) => {
   return {
-    singleProduct: state.singleProduct,
-    isLoading: state.isLoading
+    singleProduct: products.singleProduct,
+    isLoading: products.isLoading
   }
 }
 

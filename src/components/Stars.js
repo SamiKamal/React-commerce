@@ -19,8 +19,8 @@ const Stars = ({stars, reviews}) => {
   arr.push(...emptyStars)
   return (<Wrapper>
     <div className="stars">
-      {arr.map(star => (
-        <span>{star()}</span>
+      {arr.map((star, i) => (
+        <span key={i}>{star()}</span>
       ))}
     </div>
     <p className="reviews">

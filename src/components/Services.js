@@ -12,8 +12,8 @@ const Services = () => {
         </article>
 
         <div className="services-center">
-          {services.map(ser => (
-            <article className="service">
+          {services.map((ser,i) => (
+            <article className="service" key={i}>
               <span className="icon">{ser.icon}</span>
               <h4>{ser.title}</h4>
               <p>{ser.text}</p>

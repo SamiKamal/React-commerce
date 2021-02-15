@@ -15,12 +15,12 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
-  
   useEffect(() => {
     getProductsStarted()
     axios.get(url).then(data => getProductsDone(data.data))
   }, [])
-  console.log(products);
+  
+  if (products.isLoading) return <Loading/>
   return (
     <Wrapper className="section">
       <div className="title">
@@ -29,9 +29,9 @@ const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
       </div>
       
       <div className="section-center featured">
-        {products.filter(prod => {
+        {products.products.filter(prod => {
           return prod.featured
-        }).slice(0,3).map(prod => <Product Product={prod}/>)}
+        }).slice(0,3).map(prod => <Product Product={prod} key={prod.id}/>)}
       </div>
 
       <Link to="/products" className="btn">all products</Link>
@@ -68,7 +68,7 @@ const mapDispatchToProps = dispatch => {
     getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
   }
 }
-const mapStateToProps = state => {
-  return {products: state.products}
+const mapStateToProps = ({products}) => {
+  return {products}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FeaturedProducts)

@@ -5,7 +5,7 @@ import { FaCheck } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
-const AddToCart = ({colors, stock}) => {
+const AddToCart = ({colors, stock, isLoading}) => {
   const firstColor = useRef(null)
   const handleClick = e => {
     document.querySelectorAll('.active').forEach(el => {
@@ -19,11 +19,12 @@ const AddToCart = ({colors, stock}) => {
   }
 
   useEffect(() => {
+    console.log(firstColor.current);
     if (firstColor.current?.children?.length){
       firstColor.current.children[0].classList.add('active')
       firstColor.current.children[0].children[0].style.display = 'block'
     }
-  }, [firstColor])
+  }, [firstColor, isLoading])
   return (
     <Wrapper>
       {stock ? (
@@ -31,8 +32,8 @@ const AddToCart = ({colors, stock}) => {
         <div className="colors">
           <span>colors: </span>
           <div ref={firstColor}>
-            {colors.map(color => (
-              <button className="color-btn" onClick={handleClick} style={{backgroundColor: color}}>
+            {colors.map((color, i) => (
+              <button className="color-btn" onClick={handleClick} key={i} style={{backgroundColor: color}}>
                 <FaCheck style={{display: 'none'}}/>
               </button>
             ))}
