@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
@@ -6,20 +6,43 @@ import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
 const AddToCart = ({colors, stock}) => {
+  const firstColor = useRef(null)
+  const handleClick = e => {
+    document.querySelectorAll('.active').forEach(el => {
+      el.classList.remove('active')
+      if (el.children.length) el.children[0].style.display = 'none'
+      
+    })
+    e.target.closest('button').classList.add('active')
+    e.target.closest('button').children[0].style.display = 'block'
+    
+  }
+
+  useEffect(() => {
+    firstColor.current.children[0].classList.add('active')
+    firstColor.current.children[0].children[0].style.display = 'block'
+  }, [])
   return (
     <Wrapper>
-      <div className="colors">
-        <span>colors: </span>
-        <div>
-          {colors.map(color => (
-            <button className="color-btn" style={{backgroundColor: color}}></button>
-          ))}
+      {stock ? (
+        <>
+        <div className="colors">
+          <span>colors: </span>
+          <div ref={firstColor}>
+            {colors.map(color => (
+              <button className="color-btn" onClick={handleClick} style={{backgroundColor: color}}>
+                <FaCheck style={{display: 'none'}}/>
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="btn-container">
-        <AmountButtons stock={stock}/>
-        <Link className="btn" to="/cart">add to cart</Link>
-      </div>
+        <div className="btn-container">
+          <AmountButtons stock={stock}/>
+          <Link className="btn" to="/cart">add to cart</Link>
+        </div>
+      </>
+      ) : (<hr/>)}
+      
     </Wrapper>
   )
 }
@@ -70,3 +93,4 @@ const Wrapper = styled.section`
   }
 `
 export default AddToCart
+// when a user click , append 

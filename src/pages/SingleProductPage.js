@@ -28,7 +28,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
     getProductsStarted()
     axios.get(url+id).then(el => getProductsDone(el.data))
   }, [])
-
+  console.log(singleProduct);
   if (!singleProduct.name){
     return <Loading/>
   }
