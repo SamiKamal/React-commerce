@@ -13,7 +13,7 @@ const Product = ({Product}) => {
       </div>
       <footer>
         <h5>{Product.name}</h5>
-        <p>${Product.price}</p>
+        <p>{formatPrice(Product.price)}</p>
       </footer>
     </Wrapper>
   )
