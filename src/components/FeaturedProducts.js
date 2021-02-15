@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useProductsContext } from '../context/products_context'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import Error from './Error'
 import Loading from './Loading'
+import {
+  GET_PRODUCTS_BEGIN,
+  GET_PRODUCTS_SUCCESS,
+  GET_PRODUCTS_ERROR,
+} from '../actions'
+import { products_url as url } from '../utils/constants'
 import Product from './Product'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
-const FeaturedProducts = () => {
+const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
+  
+  useEffect(() => {
+    getProductsStarted()
+    axios.get(url).then(data => getProductsDone(data.data))
+  }, [])
+  console.log(products);
   return (
     <Wrapper className="section">
       <div className="title">
@@ -14,7 +28,11 @@ const FeaturedProducts = () => {
         <div className="underline"></div>
       </div>
       
-      <div className="section-center featured"></div>
+      <div className="section-center featured">
+        {products.filter(prod => {
+          return prod.featured
+        }).slice(0,3).map(prod => <Product Product={prod}/>)}
+      </div>
 
       <Link to="/products" className="btn">all products</Link>
     </Wrapper>
@@ -44,4 +62,13 @@ const Wrapper = styled.section`
   }
 `
 
-export default FeaturedProducts
+const mapDispatchToProps = dispatch => {
+  return{
+    getProductsStarted: ()=> dispatch({type: GET_PRODUCTS_BEGIN}),
+    getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
+  }
+}
+const mapStateToProps = state => {
+  return {products: state.products}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(FeaturedProducts)
