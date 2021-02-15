@@ -42,7 +42,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
         <ProductImages images={singleProduct.images}/>
         <section className="content">
           <h2>{singleProduct.name}</h2>
-          <Stars/>
+          <Stars stars={singleProduct.stars} reviews={singleProduct.reviews}/>
           <h5 className="price">{singleProduct.price}</h5>
           <p className="desc">{singleProduct.description}</p>
           <p className="info"><span>Available: </span> {singleProduct.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>

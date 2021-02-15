@@ -19,9 +19,11 @@ const AddToCart = ({colors, stock}) => {
   }
 
   useEffect(() => {
-    firstColor.current.children[0].classList.add('active')
-    firstColor.current.children[0].children[0].style.display = 'block'
-  }, [])
+    if (firstColor.current?.children?.length){
+      firstColor.current.children[0].classList.add('active')
+      firstColor.current.children[0].children[0].style.display = 'block'
+    }
+  }, [firstColor])
   return (
     <Wrapper>
       {stock ? (
