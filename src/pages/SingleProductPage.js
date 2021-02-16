@@ -29,7 +29,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
     axios.get(url+id).then(el => getProductsDone(el.data))
   }, [])
   console.log(singleProduct);
-  if (!singleProduct){
+  if (!Object.keys(singleProduct).length){
     return <Loading/>
   }
   

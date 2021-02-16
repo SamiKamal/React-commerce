@@ -9,7 +9,7 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-export const products_reducer = (state, action) => {
+export const products_reducer = (state = {}, action) => {
   const {type, payload} = action
   if (type === SIDEBAR_OPEN){
     return {...state, isSidebarOpen: true}
@@ -29,6 +29,6 @@ export const products_reducer = (state, action) => {
   } else if (type === GET_SINGLE_PRODUCT_SUCCESS){
     return {...state, isLoading: false, singleProduct: payload}
   }
-  return {state}
+  return state
   throw new Error(`No Matching "${action.type}" - action type`)
 }

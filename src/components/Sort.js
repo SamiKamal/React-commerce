@@ -2,14 +2,40 @@ import React from 'react'
 import { useFilterContext } from '../context/filter_context'
 import { BsFillGridFill, BsList } from 'react-icons/bs'
 import styled from 'styled-components'
-const Sort = () => {
+import { connect } from 'react-redux'
+import {
+  SIDEBAR_OPEN,
+  SIDEBAR_CLOSE,
+  GET_PRODUCTS_BEGIN,
+  GET_PRODUCTS_SUCCESS,
+  GET_PRODUCTS_ERROR,
+  GET_SINGLE_PRODUCT_BEGIN,
+  GET_SINGLE_PRODUCT_SUCCESS,
+  GET_SINGLE_PRODUCT_ERROR,
+  SET_GRIDVIEW,
+  SET_LISTVIEW,
+} from '../actions'
+
+const Sort = ({setGridView, setListView, isGrid}) => {
+
+  const changeListStyle = e => {
+    document.querySelectorAll('.active').forEach(el => el.classList.remove('active'))
+    e.target.closest('button').classList.add('active')
+    if (e.target.closest('button').name === 'grid'){
+      setGridView()
+    } else {
+      setListView()
+    }
+
+  }
+
   return (
     <Wrapper>
       <div className="btn-container">
-        <button className="active">
+        <button onClick={changeListStyle} name="grid" className="active">
           <BsFillGridFill/>
         </button>
-        <button className="null">
+        <button onClick={changeListStyle} name="list" className="null">
           <BsList/>
         </button>
       </div>
@@ -90,5 +116,17 @@ const Wrapper = styled.section`
     text-transform: capitalize;
   }
 `
+const mapDispatchToProps = dispatch => {
+  return {
+    setGridView: () => dispatch({type: SET_GRIDVIEW}),
+    setListView: ()  => dispatch({type: SET_LISTVIEW})
+  }
+}
 
-export default Sort
+const mapStateToProps = state => {
+  return {
+    isGrid: state.isGrid
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sort)

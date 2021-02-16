@@ -20,7 +20,20 @@ const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
     axios.get(url).then(data => getProductsDone(data.data))
   }, [])
   
-  if (products.isLoading) return <Loading/>
+  if (products.isLoading || !products.products){
+    return (
+      <Wrapper className="section">
+        <div className="title">
+          <h2>featured products</h2>
+          <div className="underline"></div>
+        </div>
+
+        <div className="section-center featured">
+          <Loading/>
+        </div>
+      </Wrapper>
+    )
+  }
   return (
     <Wrapper className="section">
       <div className="title">
@@ -28,11 +41,11 @@ const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
         <div className="underline"></div>
       </div>
       
-      <div className="section-center featured">
+      {/* <div className="section-center featured">
         {products.products.filter(prod => {
           return prod.featured
         }).slice(0,3).map(prod => <Product Product={prod} key={prod.id}/>)}
-      </div>
+      </div> */}
 
       <Link to="/products" className="btn">all products</Link>
     </Wrapper>
@@ -68,7 +81,8 @@ const mapDispatchToProps = dispatch => {
     getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
   }
 }
-const mapStateToProps = ({products}) => {
-  return {products}
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {products: state.products}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FeaturedProducts)

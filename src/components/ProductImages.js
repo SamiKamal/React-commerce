@@ -22,8 +22,6 @@ const ProductImages = ({images}) => {
       </Wrapper>
     )
 
-  } else{
-    return <Loading></Loading>
   }
 }
 

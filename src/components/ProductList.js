@@ -12,25 +12,28 @@ import {
   GET_SINGLE_PRODUCT_BEGIN,
   GET_SINGLE_PRODUCT_SUCCESS,
   GET_SINGLE_PRODUCT_ERROR,
+  SET_GRIDVIEW,
+  SET_LISTVIEW,
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 import { connect } from 'react-redux'
 import Loading from './Loading'
 
-const ProductList = ({products}) => {
+const ProductList = ({products, isGrid}) => {
   if (!products.products.length) return <Loading/>
-  return (  
+  return (
     <>
-      <GridView products={products.products}/>
-      {/* <ListView products={state.products}/> */}
-    </>
-  )
+      {isGrid ? <GridView products={products.products}/> : <ListView products={products.products}/>}
+    </>)
 }
 
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({filter, products}) => {
   return {
-    products
+    products,
+    isGrid: filter.isGrid
   }
 }
+
+
 export default connect(mapStateToProps)(ProductList)

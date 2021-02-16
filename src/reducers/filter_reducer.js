@@ -9,7 +9,14 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-export const filter_reducer = (state, action) => {
-  return {state}
+export const filter_reducer = (state = {}, action) => {
+  const {type, payload} = action;
+
+  if (type === SET_LISTVIEW){
+    return {...state, isGrid: false}
+  } else if (type === SET_GRIDVIEW){
+    return {...state, isGrid: true}
+  }
+  return state
   throw new Error(`No Matching "${action.type}" - action type`)
 }
