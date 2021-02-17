@@ -6,13 +6,17 @@ import { Filters, ProductList, Sort, PageHero, Loading } from '../components'
 import {
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
+  LOAD_PRODUCTS,
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 
-const ProductsPage = ({getProductsDone, getProductsStarted, isLoading}) => {
+const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter}) => {
   useEffect(() => {
     getProductsStarted()
-    axios.get(url).then(el => getProductsDone(el.data))
+    axios.get(url).then(el => {
+      getProductsDone(el.data);
+      loadProductsToFilter(el.data)
+    })
   }, [])
   // getProductsDone()
   if (isLoading){
@@ -51,14 +55,15 @@ const Wrapper = styled.div`
 const mapDispatchtToProps = dispatch => {
   return {
     getProductsStarted: ()=> dispatch({type: GET_PRODUCTS_BEGIN}),
-    getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
+    getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products}),
+    loadProductsToFilter: (products) => dispatch({type: LOAD_PRODUCTS, payload: products})
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = ({products, filter}) => {
   return {
-    isLoading: state.isLoading,
-    products: state.products
+    isLoading: products.isLoading,
+    products: products,
   }
 }
 

@@ -19,7 +19,7 @@ import { Provider } from 'react-redux';
 
 const initialState = { products : {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false}, 
 cart: {},
-filter: {isGrid: true}}
+filter: {isGrid: true, isFiltering: false, filteredProducts: []}}
 const rootReducers = combineReducers({products: products_reducer, cart: cart_reducer, filter: filter_reducer})
 const ProductsContext = createStore(rootReducers, initialState)
 console.log(ProductsContext)

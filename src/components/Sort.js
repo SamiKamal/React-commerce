@@ -14,9 +14,10 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
   SET_GRIDVIEW,
   SET_LISTVIEW,
+  UPDATE_SORT
 } from '../actions'
 
-const Sort = ({setGridView, setListView, isGrid}) => {
+const Sort = ({setGridView, setListView, changeSort}) => {
 
   const changeListStyle = e => {
     document.querySelectorAll('.active').forEach(el => el.classList.remove('active'))
@@ -27,6 +28,10 @@ const Sort = ({setGridView, setListView, isGrid}) => {
       setListView()
     }
 
+  }
+  console.log('rerenderd')
+  const handleSort = e => {
+    
   }
 
   return (
@@ -43,11 +48,11 @@ const Sort = ({setGridView, setListView, isGrid}) => {
       <hr/>
       <form>
         <label htmlFor="sort">sort by</label>
-        <select name="sort" id="sort" className="sort-input">
-          <option value="price-lowest">price (lowest)</option>
-          <option value="price-highest">price (highest)</option>
+        <select name="sort" onChange={(e) => changeSort(e.target.value)} id="sort" className="sort-input">
           <option value="name-a">name (a - z)</option>
           <option value="name-z">name (z - a)</option>
+          <option value="price-lowest">price (lowest)</option>
+          <option value="price-highest">price (highest)</option>
         </select>
       </form>
     </Wrapper>
@@ -119,13 +124,14 @@ const Wrapper = styled.section`
 const mapDispatchToProps = dispatch => {
   return {
     setGridView: () => dispatch({type: SET_GRIDVIEW}),
-    setListView: ()  => dispatch({type: SET_LISTVIEW})
+    setListView: ()  => dispatch({type: SET_LISTVIEW}),
+    changeSort: (sortArg) => dispatch({type: UPDATE_SORT, payload: sortArg})
   }
 }
 
 const mapStateToProps = state => {
   return {
-    isGrid: state.isGrid
+    filter: state.filter
   }
 }
 

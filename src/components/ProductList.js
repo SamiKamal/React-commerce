@@ -19,19 +19,23 @@ import { products_url as url } from '../utils/constants'
 import { connect } from 'react-redux'
 import Loading from './Loading'
 
-const ProductList = ({products, isGrid}) => {
-  if (!products.products.length) return <Loading/>
+const ProductList = ({originalProducts, filteredProducts, isGrid, isFiltering}) => {
+  if (!originalProducts.length) return <Loading/>
+  console.log(isFiltering);
   return (
     <>
-      {isGrid ? <GridView products={products.products}/> : <ListView products={products.products}/>}
+      {isGrid ? <GridView products={isFiltering ? filteredProducts : originalProducts}/> : <ListView products={isFiltering ? filteredProducts : originalProducts}/>}
     </>)
 }
 
 
 const mapStateToProps = ({filter, products}) => {
   return {
-    products,
-    isGrid: filter.isGrid
+    originalProducts: products.products,
+    isGrid: filter.isGrid,
+    filteredProducts: filter.filteredProducts,
+    isFiltering: filter.isFiltering,
+    filter
   }
 }
 
