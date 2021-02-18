@@ -5,7 +5,60 @@ import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
 const Filters = () => {
-  return <h4>filters</h4>
+  return (
+    <Wrapper>
+      <div className="content">
+        <form>
+          <div className="form-control">
+            <input type="text" placeholder="search" className="search-input"/>
+          </div>
+          <div className="form-control">
+            <h5>category</h5>
+            <div>
+              <button name="category" className="active">All</button>
+              <button name="category" className="null">Ofiice</button>
+              <button name="category" className="null">living room</button>
+              <button name="category" className="null">kitchen</button>
+              <button name="category" className="null">bedroom</button>
+              <button name="category" className="null">dining</button>
+              <button name="category" className="null">kids</button>
+            </div>
+          </div>
+          <div className="form-control">
+            <h5>company</h5>
+            <select name="company" className="company">
+              <option value="all">all</option>
+              <option value="marcos">marcos</option>
+              <option value="liddy">liddy</option>
+              <option value="ikea">ikea</option>
+              <option value="caressa">caressa</option>
+            </select>
+          </div>
+          <div className="form-control">
+            <h5>colors</h5>
+            <div className="colors">
+              <button className="all-btn active">All</button>
+              <button data-color="#ffffff" className="color-btn"></button>
+              <button data-color="#ffffff" className="color-btn"></button>
+              <button data-color="#ffffff" className="color-btn"></button>
+              <button data-color="#ffffff" className="color-btn"></button>
+              <button data-color="#ffffff" className="color-btn"></button>
+            </div>
+          </div>
+          <div className="form-control">
+            <h5>price</h5>
+            <p className="price">$4,042.22</p>
+            <input type="range" name="price" min="0" max="309999" value="309999"/>
+          </div>
+          <div className="form-control shipping">
+            <label htmlFor="shipping">free shipping</label>
+            <input type="checkbox" name="shipping" id="shipping"/>
+          </div>
+        </form>
+        <button className="clear-btn">clear filters</button>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
