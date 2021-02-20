@@ -29,11 +29,6 @@ const Sort = ({setGridView, setListView, changeSort}) => {
     }
 
   }
-  console.log('rerenderd')
-  const handleSort = e => {
-    
-  }
-
   return (
     <Wrapper>
       <div className="btn-container">

@@ -1,10 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
+import { connect } from 'react-redux'
+import { UPDATE_FILTERS, FILTER_PRODUCTS } from '../actions'
 
-const Filters = () => {
+const Filters = ({filters, updateFilter, defaultProducts, doFilter}) => {
+  const {category, company, color, price, shipping, filteredProducts} = filters
+  const categories = getUniqueValues(defaultProducts, 'category')
+  const colors = getUniqueValues(defaultProducts, 'colors')
+  const companies = getUniqueValues(defaultProducts, 'company')
+  // useEffect(() => {
+  //   updateFilter()
+  // }, [])
+
+  const handleFilter = (e) => {
+    let name = e.target.name;
+    let value = e.target.value
+    if (name === 'category'){
+      value = e.target.textContent
+      doFilter(name, value)
+    }
+    if (name === 'company'){
+      doFilter(name, value)
+    }
+
+    if (name === 'color'){
+      value = e.target.dataset.color;
+      doFilter(name, value);
+    }
+
+  }
+  console.log(filteredProducts);
   return (
     <Wrapper>
       <div className="content">
@@ -15,34 +43,26 @@ const Filters = () => {
           <div className="form-control">
             <h5>category</h5>
             <div>
-              <button name="category" className="active">All</button>
-              <button name="category" className="null">Ofiice</button>
-              <button name="category" className="null">living room</button>
-              <button name="category" className="null">kitchen</button>
-              <button name="category" className="null">bedroom</button>
-              <button name="category" className="null">dining</button>
-              <button name="category" className="null">kids</button>
+              {categories.map((cate, i) => {
+                if (cate === category){
+                  return <button name="category" type="button" className="active" onClick={handleFilter}>{cate}</button>
+                } else {
+                  return <button name="category" type="button" className="null" onClick={handleFilter}>{cate}</button>
+                }
+              })}
             </div>
           </div>
           <div className="form-control">
             <h5>company</h5>
-            <select name="company" className="company">
-              <option value="all">all</option>
-              <option value="marcos">marcos</option>
-              <option value="liddy">liddy</option>
-              <option value="ikea">ikea</option>
-              <option value="caressa">caressa</option>
+            <select name="company" className="company" onChange={handleFilter}>
+            {companies.map(comp =>  <option value={comp}>{comp}</option>)}
             </select>
           </div>
           <div className="form-control">
             <h5>colors</h5>
             <div className="colors">
-              <button className="all-btn active">All</button>
-              <button data-color="#ffffff" className="color-btn"></button>
-              <button data-color="#ffffff" className="color-btn"></button>
-              <button data-color="#ffffff" className="color-btn"></button>
-              <button data-color="#ffffff" className="color-btn"></button>
-              <button data-color="#ffffff" className="color-btn"></button>
+              <button name="color" data-color="all" className="all-btn active" type="button" onClick={handleFilter}>all</button>
+              {colors.map(color =>  <button onClick={handleFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn"></button>)}
             </div>
           </div>
           <div className="form-control">
@@ -55,7 +75,7 @@ const Filters = () => {
             <input type="checkbox" name="shipping" id="shipping"/>
           </div>
         </form>
-        <button className="clear-btn">clear filters</button>
+        <button type="button" className="clear-btn">clear filters</button>
       </div>
     </Wrapper>
   )
@@ -159,5 +179,19 @@ const Wrapper = styled.section`
     }
   }
 `
+const mapDispatch = dispatch => {
+  return {
+    doFilter: (filterBy, filterByValue) => dispatch({type: FILTER_PRODUCTS, payload: {[filterBy]: filterByValue}}),
+    updateFilter: () => dispatch({type: UPDATE_FILTERS})
+    
+  }
+}
 
-export default Filters
+const mapState = ({filter, products}) => {
+  return {
+    filters: filter,
+    defaultProducts: products.products
+  }
+}
+
+export default connect(mapState, mapDispatch)(Filters);
