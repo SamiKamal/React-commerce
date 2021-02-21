@@ -68,9 +68,29 @@ export const filter_reducer = (state = {}, action) => {
 
     }
 
-    console.log();
-    return {...state, filteredProducts: tempProducts, isFiltering: true, category: payload.category || state.category, company: payload.company || state.company, color: payload.color || state.color}
+    if ('shipping' in payload){
+      if (payload.shipping !== false) {
+        tempProducts = tempProducts.filter(el => el.shipping === payload.shipping)
+      }
+    } else if(state.shipping !== false){
+      tempProducts = tempProducts.filter(el => el.shipping === payload.shipping)
 
+    }
+
+    if ('price' in payload){
+      if (payload.price !== 'all') {
+        tempProducts = tempProducts.filter(el => el.price <= payload.price)
+      }
+    } else if(state.price !== 'all'){
+      tempProducts = tempProducts.filter(el => el.price <= state.price)
+
+    }
+
+    console.log();
+    return {...state, filteredProducts: tempProducts, isFiltering: true, category: payload.category || state.category, company: payload.company || state.company, color: payload.color || state.color, shipping: payload.shipping || state.shipping, price: payload.price || state.price}
+
+  } else if (type === CLEAR_FILTERS){
+    return {...state, filteredProducts: state.defaultProducts, isFiltering: false, category: 'all', company: 'all', color: 'all',price: 'all', shipping: false }
   }
   return state
   throw new Error(`No Matching "${action.type}" - action type`)

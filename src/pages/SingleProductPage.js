@@ -23,6 +23,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProductsStarted}) => {
+  console.log(useHistory());
   const {id} = useParams()
   useEffect(() => {
     getProductsStarted()

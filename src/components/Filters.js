@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 import { connect } from 'react-redux'
-import { UPDATE_FILTERS, FILTER_PRODUCTS } from '../actions'
+import { UPDATE_FILTERS, FILTER_PRODUCTS, CLEAR_FILTERS } from '../actions'
 
-const Filters = ({filters, updateFilter, defaultProducts, doFilter}) => {
+const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}) => {
+  const maxPrice = Math.max.apply(Math, defaultProducts.map(function(o) { return o.price; }));
+  const [priceRange, setPriceRange] = useState(Math.max.apply(Math, defaultProducts.map(function(o) { return o.price; })))
   const {category, company, color, price, shipping, filteredProducts} = filters
   const categories = getUniqueValues(defaultProducts, 'category')
   const colors = getUniqueValues(defaultProducts, 'colors')
   const companies = getUniqueValues(defaultProducts, 'company')
-  // useEffect(() => {
-  //   updateFilter()
-  // }, [])
 
   const handleFilter = (e) => {
     let name = e.target.name;
@@ -31,6 +30,15 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter}) => {
       doFilter(name, value);
     }
 
+    if (name === 'shipping'){
+      value = e.target.checked;
+      doFilter(name, value)
+    }
+
+    if (name === 'price'){
+      setPriceRange(value)
+      doFilter(name, value)
+    }
   }
   console.log(filteredProducts);
   return (
@@ -54,7 +62,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter}) => {
           </div>
           <div className="form-control">
             <h5>company</h5>
-            <select name="company" className="company" onChange={handleFilter}>
+            <select name="company" value={company} className="company" onChange={handleFilter}>
             {companies.map(comp =>  <option value={comp}>{comp}</option>)}
             </select>
           </div>
@@ -67,15 +75,15 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter}) => {
           </div>
           <div className="form-control">
             <h5>price</h5>
-            <p className="price">$4,042.22</p>
-            <input type="range" name="price" min="0" max="309999" value="309999"/>
+            <p className="price">{formatPrice(priceRange)}</p>
+            <input type="range" name="price" min="0" onChange={handleFilter} max={maxPrice} value={priceRange}/>
           </div>
           <div className="form-control shipping">
             <label htmlFor="shipping">free shipping</label>
-            <input type="checkbox" name="shipping" id="shipping"/>
+            <input onChange={handleFilter} type="checkbox" checked={shipping} name="shipping" id="shipping"/>
           </div>
         </form>
-        <button type="button" className="clear-btn">clear filters</button>
+        <button type="button" className="clear-btn" onClick={() => clearFilter()}>clear filters</button>
       </div>
     </Wrapper>
   )
@@ -182,7 +190,8 @@ const Wrapper = styled.section`
 const mapDispatch = dispatch => {
   return {
     doFilter: (filterBy, filterByValue) => dispatch({type: FILTER_PRODUCTS, payload: {[filterBy]: filterByValue}}),
-    updateFilter: () => dispatch({type: UPDATE_FILTERS})
+    updateFilter: () => dispatch({type: UPDATE_FILTERS}),
+    clearFilter: () => dispatch({type: CLEAR_FILTERS})
     
   }
 }
