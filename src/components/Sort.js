@@ -20,7 +20,7 @@ import {
 const Sort = ({setGridView, setListView, changeSort}) => {
 
   const changeListStyle = e => {
-    document.querySelectorAll('.active').forEach(el => el.classList.remove('active'))
+    e.target.closest('.btn-container').querySelectorAll('.active').forEach(el => el.classList.remove('active'))
     e.target.closest('button').classList.add('active')
     if (e.target.closest('button').name === 'grid'){
       setGridView()
