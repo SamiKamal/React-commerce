@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
@@ -7,14 +7,18 @@ import { connect } from 'react-redux'
 import { UPDATE_FILTERS, FILTER_PRODUCTS, CLEAR_FILTERS } from '../actions'
 
 const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}) => {
+  // get the maximum price in the products
   const maxPrice = Math.max.apply(Math, defaultProducts.map(function(o) { return o.price; }));
-  const [priceRange, setPriceRange] = useState(Math.max.apply(Math, defaultProducts.map(function(o) { return o.price; })))
+  const [priceRange, setPriceRange] = useState(maxPrice)
   const {category, company, color, price, shipping, filteredProducts} = filters
+  // Get unquie values
   const categories = getUniqueValues(defaultProducts, 'category')
   const colors = getUniqueValues(defaultProducts, 'colors')
   const companies = getUniqueValues(defaultProducts, 'company')
-
+  const firstColor = useRef(null)
+  
   const handleFilter = (e) => {
+    // get the name and value and later check for the name and change the value based on that.
     let name = e.target.name;
     let value = e.target.value
     if (name === 'category'){
@@ -40,6 +44,33 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
       doFilter(name, value)
     }
   }
+
+  // for handling changing the style of colors when clicked 
+  const handleClick = e => {
+    console.log(e.target);
+    e.target.closest('.colors').querySelectorAll('.active').forEach(el => {
+      el.classList.remove('active')
+      if (el.children.length) el.children[0].style.display = 'none'
+      
+    })
+    e.target.closest('button').classList.add('active')
+    if (e.target.closest('button').children.length)  e.target.closest('button').children[0].style.display = 'block'
+  }
+
+  // combine both handleClick and handleFilter for the colors
+  const handleClickAndFilter = e => {
+    handleClick(e)
+    handleFilter(e)
+  }
+
+  // when page loads add class active to the first element of div.colors
+  // might be deleted later.
+  useEffect(() => {
+    if (firstColor.current?.children?.length){
+      firstColor.current.children[0].classList.add('active')
+    }
+  }, [firstColor])
+
   console.log(filteredProducts);
   return (
     <Wrapper>
@@ -68,9 +99,16 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
           </div>
           <div className="form-control">
             <h5>colors</h5>
-            <div className="colors">
-              <button name="color" data-color="all" className="all-btn active" type="button" onClick={handleFilter}>all</button>
-              {colors.map(color =>  <button onClick={handleFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn"></button>)}
+            <div className="colors" ref={firstColor}>
+              {colors.map((color, i) =>  {
+                if (i === 0) {
+                  return <button name="color" data-color="all" className="all-btn active" type="button" onClick={handleClickAndFilter}>all</button>
+                } else {
+                  return (<button onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn">
+                              <FaCheck style={{display: 'none'}}/>
+                          </button>)
+                }
+              })}
             </div>
           </div>
           <div className="form-control">
