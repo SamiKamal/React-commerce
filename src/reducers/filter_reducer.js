@@ -19,15 +19,15 @@ export const filter_reducer = (state = {}, action) => {
   } else if (type === LOAD_PRODUCTS) {
     return {...state, filteredProducts: payload, defaultProducts: payload}
   } else if (type === UPDATE_SORT){
-    if (payload === 'price-lowest') return {...state, filteredProducts: state.filteredProducts.sort((a, b) => a.price - b.price), isFiltering: true}
-    if (payload === 'price-highest') return {...state, filteredProducts: state.filteredProducts.sort((a, b) => b.price - a.price), isFiltering: true}
+    if (payload === 'price-lowest') return {...state, filteredProducts: state.filteredProducts.sort((a, b) => a.price - b.price), isFiltering: true, sortArg: 'price-lowest'}
+    if (payload === 'price-highest') return {...state, filteredProducts: state.filteredProducts.sort((a, b) => b.price - a.price), isFiltering: true, sortArg: 'price-highest'}
 
     if (payload === 'name-a'){
       const newProducts = state.filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
-      return {...state, filteredProducts: newProducts, isFiltering: true}
+      return {...state, filteredProducts: newProducts, isFiltering: true, sortArg: 'name-a'}
     } else {
       const newProducts = state.filteredProducts.sort((a, b) => b.name.localeCompare(a.name))
-      return {...state, filteredProducts: newProducts, isFiltering: true}
+      return {...state, filteredProducts: newProducts, isFiltering: true, sortArg: 'name-z'}
 
     }
 

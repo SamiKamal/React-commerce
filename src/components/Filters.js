@@ -5,6 +5,7 @@ import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 import { connect } from 'react-redux'
 import { UPDATE_FILTERS, FILTER_PRODUCTS, CLEAR_FILTERS } from '../actions'
+let categories,colors,companies
 
 const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}) => {
   // get the maximum price in the products
@@ -12,10 +13,14 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
   const [priceRange, setPriceRange] = useState(maxPrice)
   const {category, company, color, price, shipping, filteredProducts} = filters
   // Get unquie values
-  const categories = getUniqueValues(defaultProducts, 'category')
-  const colors = getUniqueValues(defaultProducts, 'colors')
-  const companies = getUniqueValues(defaultProducts, 'company')
   const firstColor = useRef(null)
+
+  useEffect(()=> {
+    categories = getUniqueValues(defaultProducts, 'category')
+    colors = getUniqueValues(defaultProducts, 'colors')
+    companies = getUniqueValues(defaultProducts, 'company')
+  
+  }, [])
   
   const handleFilter = (e) => {
     // get the name and value and later check for the name and change the value based on that.
@@ -82,7 +87,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
           <div className="form-control">
             <h5>category</h5>
             <div>
-              {categories.map((cate, i) => {
+              {categories?.map((cate, i) => {
                 if (cate === category){
                   return <button name="category" type="button" className="active" onClick={handleFilter}>{cate}</button>
                 } else {
@@ -94,13 +99,13 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
           <div className="form-control">
             <h5>company</h5>
             <select name="company" value={company} className="company" onChange={handleFilter}>
-            {companies.map(comp =>  <option value={comp}>{comp}</option>)}
+            {companies?.map(comp =>  <option value={comp}>{comp}</option>)}
             </select>
           </div>
           <div className="form-control">
             <h5>colors</h5>
             <div className="colors" ref={firstColor}>
-              {colors.map((color, i) =>  {
+              {colors?.map((color, i) =>  {
                 if (i === 0) {
                   return <button name="color" data-color="all" className="all-btn active" type="button" onClick={handleClickAndFilter}>all</button>
                 } else {
