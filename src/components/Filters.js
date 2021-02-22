@@ -44,7 +44,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
       doFilter(name, value)
     }
   }
-
+  console.log(shipping);
   // for handling changing the style of colors when clicked 
   const handleClick = e => {
     console.log(e.target);

@@ -73,7 +73,7 @@ export const filter_reducer = (state = {}, action) => {
         tempProducts = tempProducts.filter(el => el.shipping === payload.shipping)
       }
     } else if(state.shipping !== false){
-      tempProducts = tempProducts.filter(el => el.shipping === payload.shipping)
+      tempProducts = tempProducts.filter(el => el.shipping === state.shipping)
 
     }
 
@@ -86,8 +86,7 @@ export const filter_reducer = (state = {}, action) => {
 
     }
 
-    console.log();
-    return {...state, filteredProducts: tempProducts, isFiltering: true, category: payload.category || state.category, company: payload.company || state.company, color: payload.color || state.color, shipping: payload.shipping || state.shipping, price: payload.price || state.price}
+    return {...state, filteredProducts: tempProducts, isFiltering: true, category: payload.category || state.category, company: payload.company || state.company, color: payload.color || state.color, shipping: (payload.shipping !== undefined ? payload.shipping : state.shipping), price: payload.price || state.price}
 
   } else if (type === CLEAR_FILTERS){
     return {...state, filteredProducts: state.defaultProducts, isFiltering: false, category: 'all', company: 'all', color: 'all',price: 'all', shipping: false }
