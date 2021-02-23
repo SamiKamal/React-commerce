@@ -17,8 +17,7 @@ import {
   UPDATE_SORT
 } from '../actions'
 
-const Sort = ({setGridView, setListView, changeSort}) => {
-
+const Sort = ({setGridView, setListView, changeSort, filter}) => {
   const changeListStyle = e => {
     e.target.closest('.btn-container').querySelectorAll('.active').forEach(el => el.classList.remove('active'))
     e.target.closest('button').classList.add('active')
@@ -32,10 +31,10 @@ const Sort = ({setGridView, setListView, changeSort}) => {
   return (
     <Wrapper>
       <div className="btn-container">
-        <button onClick={changeListStyle} name="grid" className="active">
+        <button onClick={changeListStyle} name="grid" className={filter.isGrid ? 'active' : 'null'}>
           <BsFillGridFill/>
         </button>
-        <button onClick={changeListStyle} name="list" className="null">
+        <button onClick={changeListStyle} name="list" className={filter.isGrid ? 'null' : 'active'}>
           <BsList/>
         </button>
       </div>

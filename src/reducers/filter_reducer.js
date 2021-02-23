@@ -26,7 +26,7 @@ export const filter_reducer = (state = {}, action) => {
       const newProducts = state.filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
       return {...state, filteredProducts: newProducts, isFiltering: true, sortArg: 'name-a'}
     } else {
-      const newProducts = state.filteredProducts.sort((a, b) => b.name.localeCompare(a.name))
+      const newProducts = state?.filteredProducts?.sort((a, b) => b.name.localeCompare(a.name))
       return {...state, filteredProducts: newProducts, isFiltering: true, sortArg: 'name-z'}
 
     }
@@ -86,10 +86,27 @@ export const filter_reducer = (state = {}, action) => {
 
     }
 
-    return {...state, filteredProducts: tempProducts, isFiltering: true, category: payload.category || state.category, company: payload.company || state.company, color: payload.color || state.color, shipping: (payload.shipping !== undefined ? payload.shipping : state.shipping), price: payload.price || state.price}
+    if ('search' in payload){
+      if (payload.search) {
+        tempProducts = tempProducts.filter(el => {
+          const regex = new RegExp(payload.search, 'gi');
+         return el.name.match(regex)
+        })
+      }
+    } else if(state.search){
+      tempProducts = tempProducts.filter(el => {
+        const regex = new RegExp(state.search, 'gi');
+       return el.name.match(regex)
+      })
+
+
+    }
+
+
+    return {...state, filteredProducts: tempProducts, isFiltering: true, category: payload.category || state.category, company: payload.company || state.company, color: payload.color || state.color, shipping: (payload.shipping !== undefined ? payload.shipping : state.shipping), price: payload.price || state.price, search: payload.search !== undefined ? payload.search : state.search}
 
   } else if (type === CLEAR_FILTERS){
-    return {...state, filteredProducts: state.defaultProducts, isFiltering: false, category: 'all', company: 'all', color: 'all',price: 'all', shipping: false }
+    return {...state, filteredProducts: state.defaultProducts, isFiltering: false, category: 'all', company: 'all', color: 'all',price: 'all', shipping: false, search: ''}
   }
   return state
   throw new Error(`No Matching "${action.type}" - action type`)

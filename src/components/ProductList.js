@@ -26,6 +26,7 @@ const ProductList = ({originalProducts, filteredProducts, isGrid, isFiltering, c
   }, [filteredProducts])
 
   if (!originalProducts.length) return <Loading/>
+  if (!filteredProducts || !filteredProducts.length) return <h5>Sorry, no products matched your search</h5>
   console.log(isFiltering);
   return (
     <>

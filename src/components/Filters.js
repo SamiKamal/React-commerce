@@ -8,6 +8,7 @@ import { UPDATE_FILTERS, FILTER_PRODUCTS, CLEAR_FILTERS } from '../actions'
 let categories,colors,companies
 
 const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}) => {
+  const [searchQuery, setSearchQuery] = useState('')
   // get the maximum price in the products
   const maxPrice = Math.max.apply(Math, defaultProducts.map(function(o) { return o.price; }));
   const [priceRange, setPriceRange] = useState(maxPrice)
@@ -19,7 +20,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
     categories = getUniqueValues(defaultProducts, 'category')
     colors = getUniqueValues(defaultProducts, 'colors')
     companies = getUniqueValues(defaultProducts, 'company')
-  
+    doFilter('none', 'all')
   }, [])
   
   const handleFilter = (e) => {
@@ -46,6 +47,11 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
 
     if (name === 'price'){
       setPriceRange(value)
+      doFilter(name, value)
+    }
+
+    if (name === 'search'){
+      setSearchQuery(value)
       doFilter(name, value)
     }
   }
@@ -82,7 +88,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
       <div className="content">
         <form>
           <div className="form-control">
-            <input type="text" placeholder="search" className="search-input"/>
+            <input type="text" placeholder="search" value={searchQuery} onChange={handleFilter} name="search" className="search-input"/>
           </div>
           <div className="form-control">
             <h5>category</h5>
@@ -126,7 +132,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
             <input onChange={handleFilter} type="checkbox" checked={shipping} name="shipping" id="shipping"/>
           </div>
         </form>
-        <button type="button" className="clear-btn" onClick={() => clearFilter()}>clear filters</button>
+        <button type="button" className="clear-btn" onClick={() => {setSearchQuery(""); return clearFilter();}}>clear filters</button>
       </div>
     </Wrapper>
   )
