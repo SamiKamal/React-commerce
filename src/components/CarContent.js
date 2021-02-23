@@ -7,7 +7,18 @@ import CartItem from './CartItem'
 import CartTotals from './CartTotals'
 
 const CartContent = () => {
-  return <h4>cart content </h4>
+  return (
+    <Wrapper className="section section-center">
+      <CartColumns/>
+      <CartItem/>
+      <hr/>
+      <div className="link-container">
+        <a href="/products" className="link-btn">continue shopping</a>
+        <button type="button" className="link-btn clear-btn">clear shopping cart</button>
+      </div>
+      <CartTotals/>
+    </Wrapper>
+  )
 }
 const Wrapper = styled.section`
   .link-container {

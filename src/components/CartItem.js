@@ -5,7 +5,23 @@ import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 const CartItem = () => {
-  return <h4>cart item</h4>
+  return (
+    <Wrapper>
+      <div className="title">
+        <img src="noting" alt="hola"/>
+        <div>
+          <h5 className="name">name</h5>
+          <p className="color">color: <span style={{backgroundColor: 'black'}}></span></p>
+          <h5 className="price-small">3241</h5>
+        </div>
+      </div>
+      <h5 className="price">3251</h5>
+      <AmountButtons/>
+      <h5 className="subtotal">34151</h5>
+      <button className="remove-btn"><FaTrash/></button>
+    </Wrapper>
+    
+  )
 }
 
 const Wrapper = styled.article`

@@ -6,7 +6,21 @@ import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 
 const CartTotals = () => {
-  return <h4>cart totals</h4>
+  return (
+    <Wrapper>
+      <div>
+        <article>
+            <h5>subtotal: <span>2342423</span></h5>
+            <p>shipping fee: <span>4324</span></p>
+            <hr/>
+            <h4>
+            order total: <span>433324</span>
+            </h4>
+        </article>
+        <button className="btn">login</button>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
