@@ -23,7 +23,6 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProductsStarted}) => {
-  console.log(useHistory());
   const {id} = useParams()
   useEffect(() => {
     getProductsStarted()
@@ -49,7 +48,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
           <p className="info"><span>Available: </span> {singleProduct.stock > 0 ? 'In Stock' : 'Out of Stock'}</p>
           <p className="info"><span>SKU: </span> {singleProduct.id}</p>
           <p className="info"><span>Brand: </span> {singleProduct.company}</p>
-          <AddToCart colors={singleProduct.colors} isLoading={isLoading} stock={singleProduct.stock}/>
+          <AddToCart colors={singleProduct.colors} name={singleProduct.name} image={singleProduct.images[0].url} price={singleProduct.price} id={singleProduct.id} isLoading={isLoading} stock={singleProduct.stock}/>
         </section>
       </div>
     </div>

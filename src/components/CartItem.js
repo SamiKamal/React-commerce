@@ -4,23 +4,29 @@ import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
-const CartItem = () => {
+const CartItem = ({items}) => {
   return (
-    <Wrapper>
-      <div className="title">
-        <img src="noting" alt="hola"/>
-        <div>
-          <h5 className="name">name</h5>
-          <p className="color">color: <span style={{backgroundColor: 'black'}}></span></p>
-          <h5 className="price-small">3241</h5>
+    <>
+    {items.map(item => {
+      return (
+      <Wrapper key={item.id}>
+        <div className="title">
+          <img src={item.image} alt={item.name}/>
+          <div>
+            <h5 className="name">{item.name}</h5>
+            <p className="color">color: <span style={{backgroundColor: item.color}}></span></p>
+            <h5 className="price-small">{item.price}</h5>
+          </div>
         </div>
-      </div>
-      <h5 className="price">3251</h5>
-      <AmountButtons/>
-      <h5 className="subtotal">34151</h5>
-      <button className="remove-btn"><FaTrash/></button>
-    </Wrapper>
-    
+        <h5 className="price">{formatPrice(item.price)}</h5>
+        <AmountButtons/>
+        <h5 className="subtotal">{formatPrice(item.price * item.quantity)}</h5>
+        <button className="remove-btn"><FaTrash/></button>
+      </Wrapper>
+
+      )
+    })}
+    </>
   )
 }
 

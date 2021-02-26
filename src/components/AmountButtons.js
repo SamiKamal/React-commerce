@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { FaPlus, FaMinus } from 'react-icons/fa'
+import { connect } from 'react-redux'
 
-const AmountButtons = ({stock}) => {
+const AmountButtons = ({stock, sendDataToParent}) => {
   const [numItem, setNumItem] = useState(1)
   const increaseCart = e => {
     if (numItem < stock){
       setNumItem((prev)=> {
         return prev + 1
       })
+      sendDataToParent(numItem)
     }
   }
 
@@ -17,6 +19,7 @@ const AmountButtons = ({stock}) => {
       setNumItem((prev)=> {
         return prev - 1
       })
+      sendDataToParent(numItem)
     }
 
   }
@@ -55,4 +58,4 @@ const Wrapper = styled.div`
   }
 `
 
-export default AmountButtons
+export default connect()(AmountButtons)

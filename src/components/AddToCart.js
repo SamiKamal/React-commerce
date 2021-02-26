@@ -1,11 +1,15 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { FaCheck } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
+import { connect } from 'react-redux'
+import { ADD_TO_CART } from '../actions'
 
-const AddToCart = ({colors, stock, isLoading}) => {
+const AddToCart = ({colors, stock, isLoading, addItemToCart, name, price, id, image}) => {
+  const [currentStock, setCurrecntStock] = useState(1)
+  const [currentColor, setCurrentColor] = useState(null)
   const firstColor = useRef(null)
   const handleClick = e => {
     document.querySelectorAll('.active').forEach(el => {
@@ -15,13 +19,24 @@ const AddToCart = ({colors, stock, isLoading}) => {
     })
     e.target.closest('button').classList.add('active')
     e.target.closest('button').children[0].style.display = 'block'
+    setCurrentColor(e.target.closest('button').dataset.color)
     
+  }
+
+  const sendDataToParent = data => {
+    console.log(data);
+    setCurrecntStock(data)
+  }
+
+  const handleAddToCart = e =>{
+    addItemToCart({name, price, quantity: currentStock, color: currentColor, id, image})
   }
 
   useEffect(() => {
     console.log(firstColor.current);
     if (firstColor.current?.children?.length){
       firstColor.current.children[0].classList.add('active')
+      setCurrentColor(firstColor.current.children[0].dataset.color)
       firstColor.current.children[0].children[0].style.display = 'block'
     }
   }, [firstColor, isLoading])
@@ -33,15 +48,15 @@ const AddToCart = ({colors, stock, isLoading}) => {
           <span>colors: </span>
           <div ref={firstColor}>
             {colors.map((color, i) => (
-              <button className="color-btn" onClick={handleClick} key={i} style={{backgroundColor: color}}>
+              <button className="color-btn" data-color={color} onClick={handleClick} key={i} style={{backgroundColor: color}}>
                 <FaCheck style={{display: 'none'}}/>
               </button>
             ))}
           </div>
         </div>
         <div className="btn-container">
-          <AmountButtons stock={stock}/>
-          <Link className="btn" to="/cart">add to cart</Link>
+          <AmountButtons stock={stock} sendDataToParent={sendDataToParent}/>
+          <Link className="btn" onClick={handleAddToCart} to="/cart">add to cart</Link>
         </div>
       </>
       ) : (<hr/>)}
@@ -95,5 +110,10 @@ const Wrapper = styled.section`
     width: 140px;
   }
 `
-export default AddToCart
-// when a user click , append 
+const mapDispatchTo = dispatch => {
+  return {
+    addItemToCart: (product) => dispatch({type: ADD_TO_CART, payload: product})
+  }
+}
+
+export default connect(null, mapDispatchTo)(AddToCart)

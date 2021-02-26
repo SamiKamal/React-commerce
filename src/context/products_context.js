@@ -18,12 +18,14 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 const initialState = { products : {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false}, 
-cart: {},
+cart: {
+  items: [],
+  total: 0,
+},
 filter: {isGrid: true, isFiltering: false, filteredProducts: [], category: "all", company: 'all', color: 'all', price: 'all', shipping: false}
 }
 const rootReducers = combineReducers({products: products_reducer, cart: cart_reducer, filter: filter_reducer})
 const ProductsContext = createStore(rootReducers, initialState)
-console.log(ProductsContext)
 export const ProductsProvider = ({ children }) => {
   return (
     <Provider store={ProductsContext}>

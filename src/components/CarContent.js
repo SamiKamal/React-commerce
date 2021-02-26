@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom'
 import CartColumns from './CartColumns'
 import CartItem from './CartItem'
 import CartTotals from './CartTotals'
+import { connect } from 'react-redux'
 
-const CartContent = () => {
+const CartContent = ({items, total}) => {
   return (
     <Wrapper className="section section-center">
       <CartColumns/>
-      <CartItem/>
+      {items.length && <CartItem items={items}/>}
       <hr/>
       <div className="link-container">
         <a href="/products" className="link-btn">continue shopping</a>
@@ -42,4 +43,13 @@ const Wrapper = styled.section`
     background: var(--clr-black);
   }
 `
-export default CartContent
+
+const mapState = ({cart}) => {
+  console.log(cart);
+  return {
+    items: cart.items,
+    total: cart.total
+  }
+}
+
+export default connect(mapState)(CartContent)

@@ -25,4 +25,5 @@ const Wrapper = styled.main`
   }
 `
 
-export default CartPage
+
+export default (CartPage)
