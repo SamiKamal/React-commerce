@@ -8,13 +8,14 @@ import CartTotals from './CartTotals'
 import { connect } from 'react-redux'
 
 const CartContent = ({items, total}) => {
+  console.log(items);
   return (
     <Wrapper className="section section-center">
       <CartColumns/>
       {items.length && <CartItem items={items}/>}
       <hr/>
       <div className="link-container">
-        <a href="/products" className="link-btn">continue shopping</a>
+        <Link to="/products" className="link-btn">continue shopping</Link>
         <button type="button" className="link-btn clear-btn">clear shopping cart</button>
       </div>
       <CartTotals/>
@@ -47,7 +48,7 @@ const Wrapper = styled.section`
 const mapState = ({cart}) => {
   console.log(cart);
   return {
-    items: cart.items,
+    items: cart.itemsInCart,
     total: cart.total
   }
 }

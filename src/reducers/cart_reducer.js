@@ -8,12 +8,10 @@ import {
 
 export const cart_reducer = (state = {}, action) => {
   const {type, payload} = action
-  console.log(state);
 
   if (type === ADD_TO_CART){
-    let newItems = [...state.items, {name: payload.name, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id, image: payload.image}]
-    console.log(...state.items);
-    return {...state, items: newItems}
+    console.log(...state.itemsInCart);
+    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id, image: payload.image}], total: state.total + 1}
   }
   return state
   throw new Error(`No Matching "${action.type}" - action type`)
