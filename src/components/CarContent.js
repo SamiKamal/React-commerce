@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useCartContext } from '../context/cart_context'
 import { Link } from 'react-router-dom'
@@ -6,8 +6,14 @@ import CartColumns from './CartColumns'
 import CartItem from './CartItem'
 import CartTotals from './CartTotals'
 import { connect } from 'react-redux'
+import { COUNT_CART_TOTALS } from '../actions'
 
-const CartContent = ({items, total}) => {
+const CartContent = ({items, total, dispatch}) => {
+  
+  useEffect(() => {
+    dispatch({type: COUNT_CART_TOTALS})
+  }, [items])
+
   console.log(items);
   return (
     <Wrapper className="section section-center">
@@ -18,7 +24,7 @@ const CartContent = ({items, total}) => {
         <Link to="/products" className="link-btn">continue shopping</Link>
         <button type="button" className="link-btn clear-btn">clear shopping cart</button>
       </div>
-      <CartTotals/>
+      <CartTotals total={total}/>
     </Wrapper>
   )
 }

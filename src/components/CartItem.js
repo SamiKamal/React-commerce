@@ -4,7 +4,9 @@ import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
-const CartItem = ({items}) => {
+import { connect } from 'react-redux'
+import { REMOVE_CART_ITEM } from '../actions'
+const CartItem = ({items, removeItem}) => {
   return (
     <>
     {items.map(item => {
@@ -21,7 +23,7 @@ const CartItem = ({items}) => {
         <h5 className="price">{formatPrice(item.price)}</h5>
         <AmountButtons/>
         <h5 className="subtotal">{formatPrice(item.price * item.quantity)}</h5>
-        <button className="remove-btn"><FaTrash/></button>
+        <button onClick={() => removeItem(item.id)} className="remove-btn"><FaTrash/></button>
       </Wrapper>
 
       )
@@ -166,4 +168,8 @@ const Wrapper = styled.article`
   }
 `
 
-export default CartItem
+const mapDispatch = dispatch => {
+  return {removeItem: (id) => dispatch({type: REMOVE_CART_ITEM, payload: id})}
+}
+
+export default connect(null, mapDispatch)(CartItem)
