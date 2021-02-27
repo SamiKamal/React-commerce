@@ -6,7 +6,7 @@ import CartColumns from './CartColumns'
 import CartItem from './CartItem'
 import CartTotals from './CartTotals'
 import { connect } from 'react-redux'
-import { COUNT_CART_TOTALS } from '../actions'
+import { CLEAR_CART, COUNT_CART_TOTALS } from '../actions'
 
 const CartContent = ({items, total, dispatch}) => {
   
@@ -22,7 +22,7 @@ const CartContent = ({items, total, dispatch}) => {
       <hr/>
       <div className="link-container">
         <Link to="/products" className="link-btn">continue shopping</Link>
-        <button type="button" className="link-btn clear-btn">clear shopping cart</button>
+        <button type="button" onClick={() => dispatch({type: CLEAR_CART})} className="link-btn clear-btn">clear shopping cart</button>
       </div>
       <CartTotals total={total}/>
     </Wrapper>
