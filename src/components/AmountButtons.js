@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 import { connect } from 'react-redux'
@@ -10,19 +10,20 @@ const AmountButtons = ({stock, sendDataToParent}) => {
       setNumItem((prev)=> {
         return prev + 1
       })
-      sendDataToParent(numItem)
     }
   }
-
   const decreaseCart = e => {
     if (numItem > 1){
       setNumItem((prev)=> {
         return prev - 1
       })
+    }
+  }
+  useEffect(()=> {
+    if (sendDataToParent){
       sendDataToParent(numItem)
     }
-
-  }
+  }, [numItem])
 
   return (
     <Wrapper className="amount-btns">

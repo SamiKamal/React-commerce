@@ -11,7 +11,20 @@ export const cart_reducer = (state = {}, action) => {
 
   if (type === ADD_TO_CART){
     console.log(...state.itemsInCart);
-    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id, image: payload.image}], total: state.total + 1}
+    const isExist = state.itemsInCart.some(item => item.id === (payload.id + payload.color))
+    console.log('item exist? ' + isExist);
+    if (isExist){
+      const newitems = state.itemsInCart.map(item => {
+        if (item.id === (payload.id + payload.color)){
+          console.log(payload.quantity);
+          item.quantity = item.quantity + payload.quantity
+          item.quantity > payload.stock ? item.quantity = payload.stock : item.quantity = item.quantity
+        }
+        return item
+      })
+      return {...state, itemsInCart: newitems}
+    }
+    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id + payload.color, image: payload.image}], total: state.total + 1}
   } else if (type === COUNT_CART_TOTALS){
     let totals = 0
     state.itemsInCart.forEach(item => {

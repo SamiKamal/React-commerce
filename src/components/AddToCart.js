@@ -29,7 +29,7 @@ const AddToCart = ({colors, stock, isLoading, addItemToCart, name, price, id, im
   }
 
   const handleAddToCart = e =>{
-    addItemToCart({name, price, quantity: currentStock, color: currentColor, id, image})
+    addItemToCart({name, price, quantity: currentStock, color: currentColor, id, image, stock})
   }
 
   useEffect(() => {
