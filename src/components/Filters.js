@@ -59,7 +59,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
   // for handling changing the style of colors when clicked 
   const handleClick = e => {
     console.log(e.target);
-    e.target.closest('.colors').querySelectorAll('.active').forEach(el => {
+      e.target.closest('.colors').querySelectorAll('.active').forEach(el => {
       el.classList.remove('active')
       if (el.children.length) el.children[0].style.display = 'none'
       
@@ -82,6 +82,23 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
     }
   }, [firstColor])
 
+  useEffect(() => {
+    if (firstColor?.current?.children && filters.color === 'all'){
+      console.log(firstColor?.current?.children.forEach);
+      Array.from(firstColor.current.children).forEach((el, i) => {
+        if (i !== 0){
+          el.children[0].style.display = 'none'
+          if (el.classList.contains('active')) el.classList.remove('active')
+        }
+      })
+    }
+  }, [filters.color])
+
+  useEffect(() => {
+    if (filters.price === 'all'){
+      setPriceRange(maxPrice)
+    }
+  }, [filters.price])
   console.log(filteredProducts);
   return (
     <Wrapper>
@@ -113,7 +130,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
             <div className="colors" ref={firstColor}>
               {colors?.map((color, i) =>  {
                 if (i === 0) {
-                  return <button name="color" data-color="all" className="all-btn active" type="button" onClick={handleClickAndFilter}>all</button>
+                  return <button name="color" data-color="all" className="all-btn active" className={filters.color === 'all' ? 'active' : ''} type="button" onClick={handleClickAndFilter}>all</button>
                 } else {
                   return (<button onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn">
                               <FaCheck style={{display: 'none'}}/>
