@@ -5,15 +5,20 @@ import styled from 'styled-components'
 import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
+import { connect } from 'react-redux'
 
-const CartButtons = () => {
+const CartButtons = ({itemsInCart}) => {
+  let numberOfItems = 0
+  itemsInCart.map(item => {
+    numberOfItems += item.quantity
+  })
   return (
     <Wrapper className="cart-btn-wrapper">
       <Link className="cart-btn" to="/cart">
         Cart
         <div className="cart-container">
           <FaShoppingCart/>
-          <span className="cart-value">8</span>
+          {itemsInCart.length ? <span className="cart-value">{numberOfItems}</span> : ''}
         </div>
       </Link>
       <button className="auth-btn">
@@ -77,4 +82,10 @@ const Wrapper = styled.div`
     }
   }
 `
-export default CartButtons
+const mapState = ({cart}) => {
+  return {
+    itemsInCart: cart.itemsInCart
+  }
+}
+
+export default connect(mapState)(CartButtons)

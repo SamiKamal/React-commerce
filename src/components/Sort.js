@@ -38,7 +38,7 @@ const Sort = ({setGridView, setListView, changeSort, filter}) => {
           <BsList/>
         </button>
       </div>
-      <p>23 products found</p>
+      <p>{filter.filteredProducts.length} products found</p>
       <hr/>
       <form>
         <label htmlFor="sort">sort by</label>
