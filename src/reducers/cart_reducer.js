@@ -24,7 +24,7 @@ export const cart_reducer = (state = {}, action) => {
       })
       return {...state, itemsInCart: newitems}
     }
-    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id + payload.color, image: payload.image}], total: state.total + 1}
+    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, stock: payload.stock, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id + payload.color, image: payload.image}], total: state.total + 1}
   } else if (type === COUNT_CART_TOTALS){
     let totals = 0
     state.itemsInCart.forEach(item => {
@@ -34,6 +34,26 @@ export const cart_reducer = (state = {}, action) => {
     return {...state, total: totals}
   } else if (type === REMOVE_CART_ITEM){
     const newItems = state.itemsInCart.filter(item => item.id !== payload)
+    return {...state, itemsInCart: newItems}
+  } else if (type === TOGGLE_CART_ITEM_AMOUNT) {
+    let newItems
+    if (payload.type === 'inc') {
+      newItems = state.itemsInCart.map(el => {
+        if (el.id === payload.id){
+          el.quantity++
+        }
+        return el
+      })
+    }
+    if (payload.type === 'dec') {
+      newItems = state.itemsInCart.map(el => {
+        if (el.id === payload.id){
+          el.quantity--
+        }
+        return el
+      })
+    }
+
     return {...state, itemsInCart: newItems}
   } else if (type === CLEAR_CART){
     return {...state, itemsInCart: []}

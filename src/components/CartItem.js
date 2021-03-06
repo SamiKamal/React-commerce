@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
@@ -7,9 +7,16 @@ import { useCartContext } from '../context/cart_context'
 import { connect } from 'react-redux'
 import { REMOVE_CART_ITEM } from '../actions'
 const CartItem = ({items, removeItem}) => {
+  const [currentStock, setCurrentStock] = useState(1)
+  const sendDataToParent = data => {
+    console.log(data);
+    setCurrentStock(data)
+  }
+
   return (
     <>
     {items.map(item => {
+      console.log(item);
       return (
       <Wrapper key={item.id}>
         <div className="title">
@@ -21,7 +28,7 @@ const CartItem = ({items, removeItem}) => {
           </div>
         </div>
         <h5 className="price">{formatPrice(item.price)}</h5>
-        <AmountButtons/>
+        <AmountButtons stock={item.stock} id={item.id} quantity={item.quantity} sendDataToParent={sendDataToParent}/>
         <h5 className="subtotal">{formatPrice(item.price * item.quantity)}</h5>
         <button onClick={() => removeItem(item.id)} className="remove-btn"><FaTrash/></button>
       </Wrapper>
