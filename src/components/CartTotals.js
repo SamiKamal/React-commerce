@@ -4,8 +4,12 @@ import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CartTotals = ({total}) => {
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  console.log(window.location.origin);
+
   return (
     <Wrapper>
       <div>
@@ -17,7 +21,7 @@ const CartTotals = ({total}) => {
             order total: <span>{formatPrice(total + 522)}</span>
             </h4>
         </article>
-        <button className="btn">login</button>
+        {isAuthenticated ? <Link className="btn" to="/checkout">Checkout</Link> : <button className="btn" onClick={() => loginWithRedirect({returnTo: window.location.origin + '/cart'})}>login</button>}
       </div>
     </Wrapper>
   )

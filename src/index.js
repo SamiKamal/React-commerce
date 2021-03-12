@@ -8,6 +8,14 @@ import { CartProvider } from './context/cart_context'
 import { UserProvider } from './context/user_context'
 import { Auth0Provider } from '@auth0/auth0-react'
 
-ReactDOM.render(<ProductsProvider>
-    <App />
-</ProductsProvider>, document.getElementById('root'))
+ReactDOM.render(
+<Auth0Provider
+    domain="dev-k-49okse.us.auth0.com"
+    clientId={process.env.REACT_APP_AUTH_ID}
+    redirectUri={window.location.origin}
+    >
+    <ProductsProvider>
+        <App />
+    </ProductsProvider>
+</Auth0Provider>
+, document.getElementById('root'))

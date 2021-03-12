@@ -6,8 +6,11 @@ import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { connect } from 'react-redux'
+import { useAuth0 } from "@auth0/auth0-react";
 
 const CartButtons = ({itemsInCart}) => {
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+
   let numberOfItems = 0
   itemsInCart.map(item => {
     numberOfItems += item.quantity
@@ -21,10 +24,19 @@ const CartButtons = ({itemsInCart}) => {
           {itemsInCart.length ? <span className="cart-value">{numberOfItems}</span> : ''}
         </div>
       </Link>
-      <button className="auth-btn">
+      {isAuthenticated ? (
+      <button className="auth-btn" onClick={() => logout()}>
+        logout
+        <FaUserMinus/>
+      </button>
+) 
+: 
+(
+      <button className="auth-btn" onClick={() => loginWithRedirect()}>
         Login
         <FaUserPlus/>
       </button>
+)}
     </Wrapper>
   )
 }
