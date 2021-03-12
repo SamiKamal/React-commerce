@@ -5,14 +5,12 @@ const Stars = ({stars, reviews}) => {
   let arr = []
   let emptyStars = []
   let i;
-  console.log(stars);
   for (i=0;i<Math.floor(stars);i++){
     arr.push(BsStarFill)
   }
   if (stars % 1 !== 0){
     arr.push(BsStarHalf)
   }
-  console.log(arr.length);
   for (i=0; i< (5 - arr.length);i++){
     emptyStars.push(BsStar)
   }

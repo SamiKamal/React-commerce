@@ -55,10 +55,8 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
       doFilter(name, value)
     }
   }
-  console.log(shipping);
   // for handling changing the style of colors when clicked 
   const handleClick = e => {
-    console.log(e.target);
       e.target.closest('.colors').querySelectorAll('.active').forEach(el => {
       el.classList.remove('active')
       if (el.children.length) el.children[0].style.display = 'none'
@@ -84,7 +82,6 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
 
   useEffect(() => {
     if (firstColor?.current?.children && filters.color === 'all'){
-      console.log(firstColor?.current?.children.forEach);
       Array.from(firstColor.current.children).forEach((el, i) => {
         if (i !== 0){
           el.children[0].style.display = 'none'
@@ -99,7 +96,6 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
       setPriceRange(maxPrice)
     }
   }, [filters.price])
-  console.log(filteredProducts);
   return (
     <Wrapper>
       <div className="content">

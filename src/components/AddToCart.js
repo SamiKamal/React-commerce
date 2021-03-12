@@ -24,7 +24,6 @@ const AddToCart = ({colors, stock, isLoading, addItemToCart, name, price, id, im
   }
 
   const sendDataToParent = data => {
-    console.log(data);
     setCurrecntStock(data)
   }
 
@@ -33,7 +32,6 @@ const AddToCart = ({colors, stock, isLoading, addItemToCart, name, price, id, im
   }
 
   useEffect(() => {
-    console.log(firstColor.current);
     if (firstColor.current?.children?.length){
       firstColor.current.children[0].classList.add('active')
       setCurrentColor(firstColor.current.children[0].dataset.color)
