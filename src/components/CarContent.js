@@ -18,7 +18,7 @@ const CartContent = ({items, total, dispatch}) => {
   return (
     <Wrapper className="section section-center">
       <CartColumns/>
-      {items.length && <CartItem items={items}/>}
+      {items.length ? <CartItem items={items}/> : (JSON.parse(localStorage.getItem("items")).length && <CartItem items={JSON.parse(localStorage.getItem("items"))}/>)}
       <hr/>
       <div className="link-container">
         <Link to="/products" className="link-btn">continue shopping</Link>

@@ -19,7 +19,7 @@ import { Provider } from 'react-redux';
 
 const initialState = { products : {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false}, 
 cart: {
-  itemsInCart: [],
+  itemsInCart: JSON.parse(localStorage.getItem("items"))?.length ? JSON.parse(localStorage.getItem("items")) : [],
   total: 0
 },
 filter: {isGrid: true, isFiltering: false, filteredProducts: [], category: "all", company: 'all', color: 'all', price: 'all', shipping: false}

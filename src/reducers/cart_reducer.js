@@ -34,6 +34,7 @@ export const cart_reducer = (state = {}, action) => {
     return {...state, total: totals}
   } else if (type === REMOVE_CART_ITEM){
     const newItems = state.itemsInCart.filter(item => item.id !== payload)
+    localStorage.setItem('items', JSON.stringify(newItems))
     return {...state, itemsInCart: newItems}
   } else if (type === TOGGLE_CART_ITEM_AMOUNT) {
     let newItems
@@ -56,6 +57,7 @@ export const cart_reducer = (state = {}, action) => {
 
     return {...state, itemsInCart: newItems}
   } else if (type === CLEAR_CART){
+    localStorage.setItem('items', JSON.stringify([]))
     return {...state, itemsInCart: []}
   }
   return state
