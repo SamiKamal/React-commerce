@@ -11,7 +11,6 @@ import {
 
 export const filter_reducer = (state = {}, action) => {
   const {type, payload} = action;
-  console.log(state);
   if (type === SET_LISTVIEW){
     return {...state, isGrid: false}
   } else if (type === SET_GRIDVIEW){

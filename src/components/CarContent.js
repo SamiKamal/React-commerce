@@ -14,7 +14,6 @@ const CartContent = ({items, total, dispatch}) => {
     dispatch({type: COUNT_CART_TOTALS})
   }, [items])
 
-  console.log(items);
   return (
     <Wrapper className="section section-center">
       <CartColumns/>
@@ -52,7 +51,6 @@ const Wrapper = styled.section`
 `
 
 const mapState = ({cart}) => {
-  console.log(cart);
   return {
     items: cart.itemsInCart,
     total: cart.total
