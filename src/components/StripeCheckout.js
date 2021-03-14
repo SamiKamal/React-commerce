@@ -12,15 +12,132 @@ import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { useAuth0 } from "@auth0/auth0-react";
 
-const CheckoutForm = () => {
-  return <h4>hello from Stripe Checkout </h4>
+const promise = loadStripe(process.env.REACT_APP_STRIPE_PUB)
+
+const CheckoutForm = ({itemsInCart, total}) => {
+  const history = useHistory()
+  // Stripe Things
+  const [succeeded, setSucceeded] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState('')
+  const [disabled, setDisabled] = useState(true)
+  const [clientSecret, setClientSecret] = useState('')
+  const stripe = useStripe()
+  const elements = useElements()
+  const {user} = useAuth0()
+
+  const cardStyle = {
+    style: {
+      base: {
+        color: '#32325d',
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#32325d',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    },
+  }
+
+  const createPaymentIntent = async function(){
+  try {
+    const {data} = await axios.post(
+      '/.netlify/functions/create-payment-intent',
+      JSON.stringify({itemsInCart, total})
+    )
+    setClientSecret(data.clientSecret);
+  } catch  {
+    console.log(error.response)
+  }
+  }
+  
+  useEffect(() => {
+    createPaymentIntent()
+    // eslint-disable-next-line
+  }, [])
+
+  const handleChange = async function (e) {
+    // Listen for changes in the CardElement
+    // and display any errors as the customer types their card details
+    setDisabled(e.empty);
+    setError(e.error ? e.error.message : "");
+
+  }
+
+  const handleSubmit = async function (e) {
+    e.preventDefault()
+    
+    setLoading(true);
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement)
+      }
+    });
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`);
+      setLoading(false);
+    } else {
+      setError(null);
+      setLoading(false);
+      setSucceeded(true);
+      setTimeout(() => {
+        history.push('/')
+      }, 6000)
+    }
+
+  }
+
+  return (
+    <div>
+      
+       { succeeded ?
+(        <article>
+          <h4>Thanks you</h4>
+          <h4>Your payment was successful!</h4>
+          <h4>Redirecting to home page shortly</h4>
+        </article>
+)          :
+          
+(            <article>
+              <h4>Hello, {user && user.nickname}</h4>
+              <p>Your total is {formatPrice(total + 522)}</p>
+              <p>test cart number: 4242 4242 4242 4242</p>
+            </article>
+)      }
+      <form id="payment-form" onSubmit={handleSubmit}>
+        <CardElement id="card-element" options={cardStyle} onChange={handleChange}/>
+        <button disabled={loading || disabled || succeeded}> <span id="button-text">{loading ? <div className="spinner" id="spinner"></div> : 'Pay'}</span></button>
+        {/* Show any error that happens when processing the payment */}
+        {error && <div className="card-error" role="alert">{error}</div>}
+        {/* Show a success message upon completion */}
+<p className={succeeded ? "result-message" : "result-message hidden"}>
+        Payment succeeded, see the result in your
+        <a
+          href={`https://dashboard.stripe.com/test/payments`}
+        >
+          {" "}
+          Stripe dashboard.
+        </a> Refresh the page to pay again.
+      </p>
+      </form>
+    </div>
+  )
 }
 
-const StripeCheckout = () => {
+const StripeCheckout = ({itemsInCart, total}) => {
   return (
     <Wrapper>
-      <CheckoutForm />
+      <Elements stripe={promise}>
+        <CheckoutForm itemsInCart={itemsInCart} total={total} />
+      </Elements>
     </Wrapper>
   )
 }
@@ -165,4 +282,10 @@ const Wrapper = styled.section`
   }
 `
 
-export default StripeCheckout
+const mapState = ({cart}) => {
+  return {
+    itemsInCart: cart.itemsInCart,
+    total: cart.total
+  }
+}
+export default connect(mapState)(StripeCheckout)

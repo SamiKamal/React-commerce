@@ -8,13 +8,18 @@ import { Loading } from '../components';
 
 const PrivateRoute = ({children, ...rest}) => {
   const {isAuthenticated, isLoading} = useAuth0()
-
-  if (isLoading){
-    return <Loading/>
-  } else {
-    return (
-      <Route {...rest} render={() => isAuthenticated ? children : <Redirect to ="/"/>}></Route>
-    );
+  try {
+  
+    if (isLoading){
+      return <Loading/>
+    } else {
+      return (
+        <Route {...rest} render={() => isAuthenticated ? children : <Redirect to ="/"/>}></Route>
+      );
+    }
+    
+  } catch {
+  return <Route><Redirect to ="/"/></Route>
   }
 };
 export default PrivateRoute;
