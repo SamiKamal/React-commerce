@@ -10,12 +10,10 @@ export const cart_reducer = (state = {}, action) => {
   const {type, payload} = action
 
   if (type === ADD_TO_CART){
-    console.log(...state.itemsInCart);
     const isExist = state.itemsInCart.some(item => item.id === (payload.id + payload.color))
     if (isExist){
       const newitems = state.itemsInCart.map(item => {
         if (item.id === (payload.id + payload.color)){
-          console.log(payload.quantity);
           item.quantity = item.quantity + payload.quantity
           item.quantity > payload.stock ? item.quantity = payload.stock : item.quantity = item.quantity
         }

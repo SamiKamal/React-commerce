@@ -8,8 +8,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const CartTotals = ({total}) => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
-  console.log(window.location.origin);
-
   return (
     <Wrapper>
       <div>

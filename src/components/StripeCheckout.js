@@ -55,7 +55,9 @@ const CheckoutForm = ({itemsInCart, total}) => {
       JSON.stringify({itemsInCart, total})
     )
     setClientSecret(data.clientSecret);
+    setError(false)
   } catch  {
+    setError(true)
     console.log(error.response)
   }
   }

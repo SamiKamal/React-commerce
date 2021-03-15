@@ -15,7 +15,6 @@ const calculateOrderAmount = items => {
 exports.handler = async function (event, context) {
     if (event.body){
         const {itemsInCart, total} = JSON.parse(event.body)
-        console.log(itemsInCart);
 
         try {
             const paymentIntent = await stripe.paymentIntents.create({

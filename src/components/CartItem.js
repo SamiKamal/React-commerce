@@ -9,14 +9,12 @@ import { REMOVE_CART_ITEM } from '../actions'
 const CartItem = ({items, removeItem}) => {
   const [currentStock, setCurrentStock] = useState(1)
   const sendDataToParent = data => {
-    console.log(data);
     setCurrentStock(data)
   }
 
   return (
     <>
     {items.map(item => {
-      console.log(item);
       return (
       <Wrapper key={item.id}>
         <div className="title">

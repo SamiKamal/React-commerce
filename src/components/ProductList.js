@@ -27,7 +27,6 @@ const ProductList = ({originalProducts, filteredProducts, isGrid, isFiltering, c
 
   if (!originalProducts.length) return <Loading/>
   if (!filteredProducts || !filteredProducts.length) return <h5>Sorry, no products matched your search</h5>
-  console.log(isFiltering);
   return (
     <>
       {isGrid ? <GridView products={isFiltering ? filteredProducts : originalProducts}/> : <ListView products={isFiltering ? filteredProducts : originalProducts}/>}
