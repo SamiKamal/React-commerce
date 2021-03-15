@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
-import { useCartContext } from '../context/cart_context'
 import { connect } from 'react-redux'
 import { REMOVE_CART_ITEM } from '../actions'
 const CartItem = ({items, removeItem}) => {

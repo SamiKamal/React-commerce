@@ -1,19 +1,8 @@
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext } from 'react'
 import {products_reducer} from '../reducers/products_reducer'
 import {cart_reducer} from '../reducers/cart_reducer'
 import {filter_reducer} from '../reducers/filter_reducer'
 
-import { products_url as url } from '../utils/constants'
-import {
-  SIDEBAR_OPEN,
-  SIDEBAR_CLOSE,
-  GET_PRODUCTS_BEGIN,
-  GET_PRODUCTS_SUCCESS,
-  GET_PRODUCTS_ERROR,
-  GET_SINGLE_PRODUCT_BEGIN,
-  GET_SINGLE_PRODUCT_SUCCESS,
-  GET_SINGLE_PRODUCT_ERROR,
-} from '../actions'
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 

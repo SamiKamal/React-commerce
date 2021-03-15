@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useCartContext } from '../context/cart_context'
-import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react";
 
 const CartTotals = ({total}) => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   return (
     <Wrapper>
       <div>
