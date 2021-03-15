@@ -14,6 +14,7 @@ import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useAuth0 } from "@auth0/auth0-react";
+import { COUNT_CART_TOTALS } from '../actions'
 
 const promise = loadStripe(process.env.REACT_APP_STRIPE_PUB)
 
@@ -132,7 +133,10 @@ const CheckoutForm = ({itemsInCart, total}) => {
   )
 }
 
-const StripeCheckout = ({itemsInCart, total}) => {
+const StripeCheckout = ({itemsInCart, total, dispatch}) => {
+  useEffect(() => {
+    dispatch({type: COUNT_CART_TOTALS})
+  }, [itemsInCart])
   return (
     <Wrapper>
       <Elements stripe={promise}>

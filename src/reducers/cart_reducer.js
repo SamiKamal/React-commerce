@@ -23,14 +23,10 @@ export const cart_reducer = (state = {}, action) => {
       })
       return {...state, itemsInCart: newitems}
     }
-    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, stock: payload.stock, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id + payload.color, image: payload.image}], total: state.total + 1}
+    return {...state, itemsInCart: [...state.itemsInCart, {name: payload.name, stock: payload.stock, price: payload.price, quantity: payload.quantity, color: payload.color, id: payload.id + payload.color, image: payload.image}]}
   } else if (type === COUNT_CART_TOTALS){
-    let totals = 0
-    state.itemsInCart.forEach(item => {
-      totals += item.price * item.quantity
-
-    })
-    return {...state, total: totals}
+    
+    return {...state, total: calculateOrderAmount(state.itemsInCart)}
   } else if (type === REMOVE_CART_ITEM){
     const newItems = state.itemsInCart.filter(item => item.id !== payload)
     localStorage.setItem('items', JSON.stringify(newItems))
@@ -62,3 +58,12 @@ export const cart_reducer = (state = {}, action) => {
   return state
   throw new Error(`No Matching "${action.type}" - action type`)
 }
+
+const calculateOrderAmount = items => {
+  let totals = 0
+  items.forEach(item => {
+      totals += item.price * item.quantity
+
+    })
+  return totals + 522;
+};
