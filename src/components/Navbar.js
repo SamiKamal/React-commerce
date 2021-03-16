@@ -5,8 +5,6 @@ import { FaBars } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { links } from '../utils/constants'
 import CartButtons from './CartButtons'
-import { useProductsContext } from '../context/products_context'
-import { useUserContext } from '../context/user_context'
 import { Navbar } from '.'
 import { SIDEBAR_OPEN } from '../actions'
 import { connect } from 'react-redux'
@@ -16,7 +14,7 @@ const Nav = ({openSidebar}) => {
   <NavContainer>
     <div className="nav-center">
       <div className="nav-header">
-        <Link to="/"><img src={logo} alt="company logo"/></Link>
+        <Link to="/"><h1>React <span>Commerce</span>.</h1></Link>
         <button className="nav-toggle" onClick={() => openSidebar()}><FaBars/></button>
       </div>
       <ul className="nav-links">
@@ -35,6 +33,17 @@ const NavContainer = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  h1{
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--clr-primary-1);
+    
+    span {
+      color: var(--clr-primary-6);
+      
+    }
+  }
 
   .nav-center {
     width: 90vw;

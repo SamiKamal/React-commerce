@@ -1,3 +1,7 @@
+//TODO: Fix sidebar
+//TODO: Fix Page Hero
+//TODO: Change design
+//TODO: increase performance
 import React, { useContext } from 'react'
 import {products_reducer} from '../reducers/products_reducer'
 import {cart_reducer} from '../reducers/cart_reducer'
