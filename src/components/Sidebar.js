@@ -101,7 +101,7 @@ const SidebarContainer = styled.div`
 const mapDispatchToProps = dispatch => {
   return {closeSidebar: () => dispatch({type: SIDEBAR_CLOSE})}
 }
-const mapStateToProps = state => {
-  return {isSidebarOpen: state.isSidebarOpen}
+const mapStateToProps = ({products}) => {
+  return {isSidebarOpen: products.isSidebarOpen}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
