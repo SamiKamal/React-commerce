@@ -107,9 +107,9 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
             <div>
               {categories?.map((cate, i) => {
                 if (cate === category){
-                  return <button name="category" type="button" className="active" onClick={handleFilter}>{cate}</button>
+                  return <button key={i} name="category" type="button" className="active" onClick={handleFilter}>{cate}</button>
                 } else {
-                  return <button name="category" type="button" className="null" onClick={handleFilter}>{cate}</button>
+                  return <button key={i} name="category" type="button" className="null" onClick={handleFilter}>{cate}</button>
                 }
               })}
             </div>
@@ -117,7 +117,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
           <div className="form-control">
             <h5>company</h5>
             <select name="company" value={company} className="company" onChange={handleFilter}>
-            {companies?.map(comp =>  <option value={comp}>{comp}</option>)}
+            {companies?.map((comp, i) =>  <option key={i} value={comp}>{comp}</option>)}
             </select>
           </div>
           <div className="form-control">
@@ -125,9 +125,9 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
             <div className="colors" ref={firstColor}>
               {colors?.map((color, i) =>  {
                 if (i === 0) {
-                  return <button name="color" data-color="all" className="all-btn active" className={filters.color === 'all' ? 'active' : ''} type="button" onClick={handleClickAndFilter}>all</button>
+                  return <button name="color" key={i} data-color="all" className="all-btn active" className={filters.color === 'all' ? 'active' : ''} type="button" onClick={handleClickAndFilter}>all</button>
                 } else {
-                  return (<button onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn">
+                  return (<button key={i} onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn">
                               <FaCheck style={{display: 'none'}}/>
                           </button>)
                 }

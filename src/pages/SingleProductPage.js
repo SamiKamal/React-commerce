@@ -34,7 +34,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
   
   return (
     <Wrapper>
-    <PageHero/>
+    <PageHero path='products' productName={singleProduct.name}/>
     <div className="section section-center page">
       <Link className="btn" to="/products">back to products</Link>
       <div className="product-center">

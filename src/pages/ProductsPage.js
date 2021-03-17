@@ -25,7 +25,7 @@ const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProdu
 
   return (
     <main>
-      <PageHero/>
+      <PageHero path='products'/>
       <Wrapper className="page">
         <div className="section-center products">
           <Filters/>

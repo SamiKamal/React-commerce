@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-const PageHero = () => {
+const PageHero = ({path, productName = ''}) => {
   return (
     <Wrapper>
       <div className="section-center">
-        <h3><Link to="/">Home</Link> / About</h3>
+        <h3><Link to="/">Home</Link> / {productName !== '' ? <Link to={'/' + path}>{path}</Link> : path} {productName && '/ ' + productName}</h3>
       </div>
     </Wrapper>
   )

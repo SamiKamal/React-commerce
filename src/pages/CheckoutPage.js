@@ -5,7 +5,7 @@ import { PageHero, StripeCheckout } from '../components'
 const CheckoutPage = () => {
   return (
     <main>
-      <PageHero/>
+     <PageHero path='checkout'/>
       <Wrapper className="page">
         <StripeCheckout/>
       </Wrapper>
