@@ -17,7 +17,7 @@ const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
   useEffect(() => {
     getProductsStarted()
     axios.get(url).then(data => getProductsDone(data.data))
-  }, [])
+  }, [getProductsDone, getProductsStarted])
   
   if (products.isLoading || !products.products){
     return (

@@ -34,7 +34,7 @@ const AmountButtons = ({stock, sendDataToParent, quantity, dispatch, id}) => {
     if (sendDataToParent){
       sendDataToParent(numItem)
     }
-  }, [numItem])
+  }, [numItem, sendDataToParent])
 
   return (
     <Wrapper className="amount-btns">

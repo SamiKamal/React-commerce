@@ -3,7 +3,6 @@ import {
   SET_LISTVIEW,
   SET_GRIDVIEW,
   UPDATE_SORT,
-  SORT_PRODUCTS,
   UPDATE_FILTERS,
   FILTER_PRODUCTS,
   CLEAR_FILTERS,
@@ -108,5 +107,5 @@ export const filter_reducer = (state = {}, action) => {
     return {...state, filteredProducts: state.defaultProducts, isFiltering: false, category: 'all', company: 'all', color: 'all',price: 'all', shipping: false, search: ''}
   }
   return state
-  throw new Error(`No Matching "${action.type}" - action type`)
+  // throw new Error(`No Matching "${action.type}" - action type`)
 }

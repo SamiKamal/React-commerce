@@ -11,7 +11,7 @@ const CartContent = ({items, total, dispatch}) => {
   
   useEffect(() => {
     dispatch({type: COUNT_CART_TOTALS})
-  }, [items])
+  }, [items, dispatch])
 
   return (
     <Wrapper className="section section-center">

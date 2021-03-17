@@ -17,7 +17,7 @@ const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProdu
       getProductsDone(el.data);
       loadProductsToFilter(el.data)
     })
-  }, [])
+  }, [getProductsStarted, getProductsDone, loadProductsToFilter])
   // getProductsDone()
   if (isLoading){
     return <Loading/>

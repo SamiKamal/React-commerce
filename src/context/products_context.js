@@ -1,5 +1,5 @@
-//TODO: Fix Page Hero
 //TODO: increase performance
+//TODO: hanlde errors
 import React, { useContext } from 'react'
 import {products_reducer} from '../reducers/products_reducer'
 import {cart_reducer} from '../reducers/cart_reducer'

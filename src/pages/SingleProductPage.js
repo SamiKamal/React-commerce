@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { single_product_url as url } from '../utils/constants'
 import { formatPrice } from '../utils/helpers'
 import {
@@ -26,7 +26,7 @@ const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProduc
   useEffect(() => {
     getProductsStarted()
     axios.get(url+id).then(el => getProductsDone(el.data))
-  }, [])
+  }, [getProductsDone, getProductsStarted, id])
 
   if (!Object.keys(singleProduct).length){
     return <Loading/>

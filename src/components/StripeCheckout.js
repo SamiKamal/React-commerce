@@ -136,7 +136,7 @@ const CheckoutForm = ({itemsInCart, total}) => {
 const StripeCheckout = ({itemsInCart, total, dispatch}) => {
   useEffect(() => {
     dispatch({type: COUNT_CART_TOTALS})
-  }, [itemsInCart])
+  }, [itemsInCart, dispatch])
   return (
     <Wrapper>
       <Elements stripe={promise}>

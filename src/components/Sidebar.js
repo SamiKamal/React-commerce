@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from '../assets/logo.svg'
 import { Link } from 'react-router-dom'
 import { FaTimes } from 'react-icons/fa'
 import { links } from '../utils/constants'
@@ -13,7 +12,7 @@ const Sidebar = ({closeSidebar, isSidebarOpen}) => {
     <SidebarContainer>
       <aside className={`sidebar ${isSidebarOpen ? 'show-sidebar' : 'hide-sidebar' }`}>
         <div className="sidebar-header">
-          <img src={logo} alt="company logo" className="logo"/>
+        <Link to="/"><h1>React <span>Commerce</span>.</h1></Link>
           <button className="close-btn" onClick={()=> closeSidebar()}><FaTimes/></button>
         </div>
         <ul className="links">
@@ -28,6 +27,18 @@ const Sidebar = ({closeSidebar, isSidebarOpen}) => {
 }
 
 const SidebarContainer = styled.div`
+
+h1{
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--clr-primary-1);
+  
+  span {
+    color: var(--clr-primary-6);
+    
+  }
+}
+
   text-align: center;
   .sidebar-header {
     display: flex;

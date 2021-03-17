@@ -9,7 +9,7 @@ const CartButtons = ({itemsInCart}) => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
 
   let numberOfItems = 0
-  itemsInCart.map(item => {
+  itemsInCart.forEach(item => {
     numberOfItems += item.quantity
   })
   return (

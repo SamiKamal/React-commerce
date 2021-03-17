@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Loading from './Loading'
 
 const ProductImages = ({images}) => {
   const [mainImage, setMainImage] = useState(images)

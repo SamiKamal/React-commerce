@@ -6,12 +6,12 @@ import { connect } from 'react-redux'
 import { UPDATE_FILTERS, FILTER_PRODUCTS, CLEAR_FILTERS } from '../actions'
 let categories,colors,companies
 
-const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}) => {
+const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
   const [searchQuery, setSearchQuery] = useState('')
   // get the maximum price in the products
   const maxPrice = Math.max.apply(Math, defaultProducts.map(function(o) { return o.price; }));
   const [priceRange, setPriceRange] = useState(maxPrice)
-  const {category, company, color, price, shipping, filteredProducts} = filters
+  const {category, company, shipping} = filters
   // Get unquie values
   const firstColor = useRef(null)
 
@@ -20,7 +20,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
     colors = getUniqueValues(defaultProducts, 'colors')
     companies = getUniqueValues(defaultProducts, 'company')
     doFilter('none', 'all')
-  }, [])
+  }, [defaultProducts, doFilter])
   
   const handleFilter = (e) => {
     // get the name and value and later check for the name and change the value based on that.
@@ -94,7 +94,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
     if (filters.price === 'all'){
       setPriceRange(maxPrice)
     }
-  }, [filters.price])
+  }, [filters.price, maxPrice])
   return (
     <Wrapper>
       <div className="content">
@@ -125,7 +125,7 @@ const Filters = ({filters, updateFilter, defaultProducts, doFilter, clearFilter}
             <div className="colors" ref={firstColor}>
               {colors?.map((color, i) =>  {
                 if (i === 0) {
-                  return <button name="color" key={i} data-color="all" className="all-btn active" className={filters.color === 'all' ? 'active' : ''} type="button" onClick={handleClickAndFilter}>all</button>
+                  return <button name="color" key={i} data-color="all" className={filters.color === 'all' ? 'active' : ''} type="button" onClick={handleClickAndFilter}>all</button>
                 } else {
                   return (<button key={i} onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn">
                               <FaCheck style={{display: 'none'}}/>

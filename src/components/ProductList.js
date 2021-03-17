@@ -4,14 +4,13 @@ import ListView from './ListView'
 import {
   UPDATE_SORT
 } from '../actions'
-import { products_url as url } from '../utils/constants'
 import { connect } from 'react-redux'
 import Loading from './Loading'
 
 const ProductList = ({originalProducts, filteredProducts, isGrid, isFiltering, changeSort, sortArg}) => {
   useEffect(() => {
     changeSort(sortArg)
-  }, [filteredProducts])
+  }, [filteredProducts, changeSort, sortArg])
 
   if (!originalProducts.length) return <Loading/>
   if (!filteredProducts || !filteredProducts.length) return <h5>Sorry, no products matched your search</h5>
