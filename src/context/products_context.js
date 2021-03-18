@@ -8,7 +8,7 @@ import {filter_reducer} from '../reducers/filter_reducer'
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
-const initialState = { products : {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false}, 
+const initialState = { products : {isSidebarOpen: false, products: [], singleProduct: {}, isLoading: false, isError: false}, 
 cart: {
   itemsInCart: JSON.parse(localStorage.getItem("items"))?.length ? JSON.parse(localStorage.getItem("items")) : [],
   total: 0

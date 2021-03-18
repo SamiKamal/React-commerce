@@ -21,13 +21,17 @@ export const products_reducer = (state = {}, action) => {
     return {...state, isLoading: true, products: []}
     
   } else if (type === GET_PRODUCTS_SUCCESS){
-    return {...state, isLoading: false, products: payload}
+    return {...state, isLoading: false, products: payload, isError: false}
     
   } else if (type === GET_SINGLE_PRODUCT_BEGIN){
     return {...state, isLoading: true, singleProduct: {}}
     
   } else if (type === GET_SINGLE_PRODUCT_SUCCESS){
-    return {...state, isLoading: false, singleProduct: payload}
+    return {...state, isLoading: false, singleProduct: payload, isError: false}
+  } else if (type === GET_PRODUCTS_ERROR){
+    return {...state, isError: true}
+  } else if (type === GET_SINGLE_PRODUCT_ERROR){
+    return {...state, isError: true}
   }
   return state
   // throw new Error(`No Matching "${action.type}" - action type`)

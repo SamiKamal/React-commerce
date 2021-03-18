@@ -13,11 +13,29 @@ import Product from './Product'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
+const FeaturedProducts = ({getProductsStarted, getProductsDone, products, getProductsError}) => {
+  
   useEffect(() => {
     getProductsStarted()
-    axios.get(url).then(data => getProductsDone(data.data))
-  }, [getProductsDone, getProductsStarted])
+    axios.get(url).then(data => getProductsDone(data.data)).catch(err => getProductsError())
+
+  }, [getProductsDone, getProductsStarted, getProductsError])
+
+  if (products.isError){
+    return (
+      <Wrapper className="section">
+      <div className="title">
+        <h2>featured products</h2>
+        <div className="underline"></div>
+      </div>
+      
+      <div className="section-center featured">
+        <Error/>
+      </div>
+    </Wrapper>
+
+    )
+  }
   
   if (products.isLoading || !products.products){
     return (
@@ -33,6 +51,7 @@ const FeaturedProducts = ({getProductsStarted, getProductsDone, products}) => {
       </Wrapper>
     )
   }
+
   return (
     <Wrapper className="section">
       <div className="title">
@@ -77,7 +96,8 @@ const Wrapper = styled.section`
 const mapDispatchToProps = dispatch => {
   return{
     getProductsStarted: ()=> dispatch({type: GET_PRODUCTS_BEGIN}),
-    getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products})
+    getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products}),
+    getProductsError: () => dispatch({type: GET_PRODUCTS_ERROR})
   }
 }
 const mapStateToProps = (state) => {

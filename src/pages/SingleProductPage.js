@@ -21,12 +21,17 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProductsStarted}) => {
+const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProductsStarted, getProductsError, isError}) => {
   const {id} = useParams()
   useEffect(() => {
     getProductsStarted()
-    axios.get(url+id).then(el => getProductsDone(el.data))
-  }, [getProductsDone, getProductsStarted, id])
+    axios.get(url+id).then(el => getProductsDone(el.data)).catch(() => getProductsError())
+    
+  }, [getProductsDone, getProductsStarted, id, getProductsError])
+
+  if (isError){
+    return <Error/>
+  }
 
   if (!Object.keys(singleProduct).length){
     return <Loading/>
@@ -92,14 +97,16 @@ const Wrapper = styled.main`
 const mapDispatchtToProps = dispatch => {
   return {
     getProductsStarted: ()=> dispatch({type: GET_SINGLE_PRODUCT_BEGIN}),
-    getProductsDone: (products) => dispatch({type: GET_SINGLE_PRODUCT_SUCCESS, payload: products})
+    getProductsDone: (products) => dispatch({type: GET_SINGLE_PRODUCT_SUCCESS, payload: products}),
+    getProductsError: () => dispatch({type: GET_SINGLE_PRODUCT_ERROR})
   }
 }
 
 const mapStateToProps = ({products}) => {
   return {
     singleProduct: products.singleProduct,
-    isLoading: products.isLoading
+    isLoading: products.isLoading,
+    isError: products.isError
   }
 }
 
