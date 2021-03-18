@@ -7,19 +7,23 @@ import {
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
   LOAD_PRODUCTS,
+  UPDATE_SORT,
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 
-const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter}) => {
+const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter, products}) => {
   useEffect(() => {
-    batch(() => {
-      getProductsStarted()
-      axios.get(url).then(el => {
-        getProductsDone(el.data);
-        loadProductsToFilter(el.data)
+    if (!products.products.length){
+      batch(() => {
+        getProductsStarted()
+        axios.get(url).then(el => {
+          getProductsDone(el.data);
+          loadProductsToFilter(el.data)
+        })
       })
-    })
+    } 
   }, [getProductsStarted, getProductsDone, loadProductsToFilter])
+
   // getProductsDone()
   if (isLoading){
     return <Loading/>
@@ -59,10 +63,11 @@ const mapDispatchtToProps = dispatch => {
     getProductsStarted: ()=> dispatch({type: GET_PRODUCTS_BEGIN}),
     getProductsDone: (products) => dispatch({type: GET_PRODUCTS_SUCCESS, payload: products}),
     loadProductsToFilter: (products) => dispatch({type: LOAD_PRODUCTS, payload: products})
+
   }
 }
 
-const mapStateToProps = ({products, filter}) => {
+const mapStateToProps = ({products}) => {
   return {
     isLoading: products.isLoading,
     products: products,

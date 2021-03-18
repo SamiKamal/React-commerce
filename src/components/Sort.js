@@ -34,8 +34,8 @@ const Sort = ({setGridView, setListView, changeSort, filter}) => {
       <form>
         <label htmlFor="sort">sort by</label>
         <select name="sort" onChange={(e) => changeSort(e.target.value)} id="sort" className="sort-input">
-          <option value="name-a">name (a - z)</option>
           <option value="name-z">name (z - a)</option>
+          <option value="name-a">name (a - z)</option>
           <option value="price-lowest">price (lowest)</option>
           <option value="price-highest">price (highest)</option>
         </select>

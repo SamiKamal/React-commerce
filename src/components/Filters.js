@@ -54,6 +54,13 @@ const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
       doFilter(name, value)
     }
   }
+  useEffect(() => {
+    if (filters.price === 'all'){
+      setPriceRange(maxPrice)
+    } else {
+      setPriceRange(filters.price)
+    }
+  }, [])
   // for handling changing the style of colors when clicked 
   const handleClick = e => {
       e.target.closest('.colors').querySelectorAll('.active').forEach(el => {
@@ -78,11 +85,11 @@ const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
 
   // when page loads add class active to the first element of div.colors
   // might be deleted later.
-  useEffect(() => {
-    if (firstColor.current?.children?.length){
-      firstColor.current.children[0].classList.add('active')
-    }
-  }, [firstColor])
+  // useEffect(() => {
+  //   if (firstColor.current?.children?.length){
+  //     firstColor.current.children[0].classList.add('active')
+  //   }
+  // }, [firstColor])
 
   useEffect(() => {
     if (firstColor?.current?.children && filters.color === 'all'){
@@ -132,8 +139,8 @@ const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
                 if (i === 0) {
                   return <button name="color" key={i} data-color="all" className={filters.color === 'all' ? 'active' : ''} type="button" onClick={handleClickAndFilter}>all</button>
                 } else {
-                  return (<button key={i} onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className="color-btn">
-                              <FaCheck style={{display: 'none'}}/>
+                  return (<button key={i} onClick={handleClickAndFilter} name="color" data-color={color} style={{backgroundColor: color}} type="button" className={`color-btn ${filters.color === color ? 'active' : ''}`}>
+                              <FaCheck style={{display: filters.color === color ? 'block' : 'none'}}/>
                           </button>)
                 }
               })}
