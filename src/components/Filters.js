@@ -71,6 +71,11 @@ const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
     handleFilter(e)
   }
 
+  const handleClearFilter = e => {
+    setSearchQuery("");
+    clearFilter();
+  }
+
   // when page loads add class active to the first element of div.colors
   // might be deleted later.
   useEffect(() => {
@@ -144,7 +149,7 @@ const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
             <input onChange={handleFilter} type="checkbox" checked={shipping} name="shipping" id="shipping"/>
           </div>
         </form>
-        <button type="button" className="clear-btn" onClick={() => {setSearchQuery(""); return clearFilter();}}>clear filters</button>
+        <button type="button" className="clear-btn" onClick={handleClearFilter}>clear filters</button>
       </div>
     </Wrapper>
   )

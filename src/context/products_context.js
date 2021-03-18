@@ -1,5 +1,4 @@
 //TODO: increase performance
-//TODO: hanlde errors
 import React, { useContext } from 'react'
 import {products_reducer} from '../reducers/products_reducer'
 import {cart_reducer} from '../reducers/cart_reducer'
@@ -17,14 +16,10 @@ filter: {isGrid: true, isFiltering: false, filteredProducts: [], category: "all"
 }
 const rootReducers = combineReducers({products: products_reducer, cart: cart_reducer, filter: filter_reducer})
 const ProductsContext = createStore(rootReducers, initialState)
-export const ProductsProvider = ({ children }) => {
+export const ProductsProvider = React.memo(({ children }) => {
   return (
     <Provider store={ProductsContext}>
       {children}
     </Provider>
   )
-}
-// make sure use
-export const useProductsContext = () => {
-  return useContext(ProductsContext)
-}
+})

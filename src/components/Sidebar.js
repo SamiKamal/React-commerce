@@ -13,7 +13,7 @@ const Sidebar = ({closeSidebar, isSidebarOpen}) => {
       <aside className={`sidebar ${isSidebarOpen ? 'show-sidebar' : 'hide-sidebar' }`}>
         <div className="sidebar-header">
         <Link to="/"><h1>React <span>Commerce</span>.</h1></Link>
-          <button className="close-btn" onClick={()=> closeSidebar()}><FaTimes/></button>
+          <button className="close-btn" onClick={closeSidebar}><FaTimes/></button>
         </div>
         <ul className="links">
         {links.map(link => (

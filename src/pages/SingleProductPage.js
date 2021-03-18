@@ -18,14 +18,16 @@ import {
 
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { batch, connect } from 'react-redux'
 import axios from 'axios'
 
 const SingleProductPage = ({getProductsDone, singleProduct, isLoading, getProductsStarted, getProductsError, isError}) => {
   const {id} = useParams()
   useEffect(() => {
-    getProductsStarted()
-    axios.get(url+id).then(el => getProductsDone(el.data)).catch(() => getProductsError())
+    batch(() => {
+      getProductsStarted()
+      axios.get(url+id).then(el => getProductsDone(el.data)).catch(() => getProductsError())
+    })
     
   }, [getProductsDone, getProductsStarted, id, getProductsError])
 
@@ -110,4 +112,4 @@ const mapStateToProps = ({products}) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchtToProps)(SingleProductPage);
+export default connect(mapStateToProps, mapDispatchtToProps)(React.memo(SingleProductPage));

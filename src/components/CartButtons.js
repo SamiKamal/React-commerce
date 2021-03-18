@@ -22,14 +22,14 @@ const CartButtons = ({itemsInCart}) => {
         </div>
       </Link>
       {isAuthenticated ? (
-      <button className="auth-btn" onClick={() => logout()}>
+      <button className="auth-btn" onClick={logout}>
         logout
         <FaUserMinus/>
       </button>
 ) 
 : 
 (
-      <button className="auth-btn" onClick={() => loginWithRedirect()}>
+      <button className="auth-btn" onClick={loginWithRedirect}>
         Login
         <FaUserPlus/>
       </button>

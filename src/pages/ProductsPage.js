@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { connect } from 'react-redux'
+import { connect,batch } from 'react-redux'
 import styled from 'styled-components'
 import { Filters, ProductList, Sort, PageHero, Loading } from '../components'
 import {
@@ -12,10 +12,12 @@ import { products_url as url } from '../utils/constants'
 
 const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter}) => {
   useEffect(() => {
-    getProductsStarted()
-    axios.get(url).then(el => {
-      getProductsDone(el.data);
-      loadProductsToFilter(el.data)
+    batch(() => {
+      getProductsStarted()
+      axios.get(url).then(el => {
+        getProductsDone(el.data);
+        loadProductsToFilter(el.data)
+      })
     })
   }, [getProductsStarted, getProductsDone, loadProductsToFilter])
   // getProductsDone()
@@ -67,4 +69,4 @@ const mapStateToProps = ({products, filter}) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchtToProps)(ProductsPage)
+export default connect(mapStateToProps, mapDispatchtToProps)(React.memo(ProductsPage))

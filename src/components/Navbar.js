@@ -13,7 +13,7 @@ const Nav = ({openSidebar}) => {
     <div className="nav-center">
       <div className="nav-header">
         <Link to="/"><h1>React <span>Commerce</span>.</h1></Link>
-        <button className="nav-toggle" onClick={() => openSidebar()}><FaBars/></button>
+        <button className="nav-toggle" onClick={openSidebar}><FaBars/></button>
       </div>
       <ul className="nav-links">
         {links.map(link => (

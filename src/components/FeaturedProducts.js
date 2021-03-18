@@ -10,14 +10,16 @@ import {
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 import Product from './Product'
-import { connect } from 'react-redux'
+import { batch, connect } from 'react-redux'
 import axios from 'axios'
 
 const FeaturedProducts = ({getProductsStarted, getProductsDone, products, getProductsError}) => {
   
   useEffect(() => {
-    getProductsStarted()
-    axios.get(url).then(data => getProductsDone(data.data)).catch(err => getProductsError())
+    batch(() => {
+      getProductsStarted()
+      axios.get(url).then(data => getProductsDone(data.data)).catch(err => getProductsError())
+    })
 
   }, [getProductsDone, getProductsStarted, getProductsError])
 
