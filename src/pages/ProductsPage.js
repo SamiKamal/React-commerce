@@ -13,6 +13,7 @@ import { products_url as url } from '../utils/constants'
 
 const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter, products}) => {
   useEffect(() => {
+    console.log(products.products);
     if (!products.products.length){
       batch(() => {
         getProductsStarted()
@@ -21,7 +22,9 @@ const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProdu
           loadProductsToFilter(el.data)
         })
       })
-    } 
+    } else {
+      loadProductsToFilter(products.products)
+    }
   }, [getProductsStarted, getProductsDone, loadProductsToFilter])
 
   // getProductsDone()
