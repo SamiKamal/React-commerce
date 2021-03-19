@@ -6,14 +6,12 @@ import { Filters, ProductList, Sort, PageHero, Loading } from '../components'
 import {
   GET_PRODUCTS_BEGIN,
   GET_PRODUCTS_SUCCESS,
-  LOAD_PRODUCTS,
-  UPDATE_SORT,
+  LOAD_PRODUCTS
 } from '../actions'
 import { products_url as url } from '../utils/constants'
 
-const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter, products}) => {
+const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProductsToFilter, products, filteredProducts}) => {
   useEffect(() => {
-    console.log(products.products);
     if (!products.products.length){
       batch(() => {
         getProductsStarted()
@@ -22,10 +20,10 @@ const ProductsPage = ({getProductsDone, getProductsStarted, isLoading, loadProdu
           loadProductsToFilter(el.data)
         })
       })
-    } else {
+    } else if(!filteredProducts.length){
       loadProductsToFilter(products.products)
     }
-  }, [getProductsStarted, getProductsDone, loadProductsToFilter])
+  }, [getProductsStarted, getProductsDone, loadProductsToFilter, products.products])
 
   // getProductsDone()
   if (isLoading){
@@ -70,10 +68,11 @@ const mapDispatchtToProps = dispatch => {
   }
 }
 
-const mapStateToProps = ({products}) => {
+const mapStateToProps = ({products, filter}) => {
   return {
     isLoading: products.isLoading,
     products: products,
+    filteredProducts: filter.filteredProducts
   }
 }
 
