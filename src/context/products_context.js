@@ -1,5 +1,5 @@
 //TODO: increase performance
-import React, { useContext } from 'react'
+import React from 'react'
 import {products_reducer} from '../reducers/products_reducer'
 import {cart_reducer} from '../reducers/cart_reducer'
 import {filter_reducer} from '../reducers/filter_reducer'

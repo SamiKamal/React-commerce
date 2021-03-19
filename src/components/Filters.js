@@ -60,7 +60,7 @@ const Filters = ({filters, defaultProducts, doFilter, clearFilter}) => {
     } else {
       setPriceRange(filters.price)
     }
-  }, [])
+  }, [filters.price, maxPrice])
   // for handling changing the style of colors when clicked 
   const handleClick = e => {
       e.target.closest('.colors').querySelectorAll('.active').forEach(el => {
