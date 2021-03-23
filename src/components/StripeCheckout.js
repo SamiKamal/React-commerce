@@ -54,7 +54,7 @@ const CheckoutForm = ({itemsInCart, total}) => {
     )
     setClientSecret(data.clientSecret);
     setError(false)
-  } catch  {
+  } catch (error) {
     setError(true)
     console.log(error.response)
   }
@@ -91,7 +91,7 @@ const CheckoutForm = ({itemsInCart, total}) => {
       setSucceeded(true);
       setTimeout(() => {
         history.push('/')
-      }, 6000)
+      }, 3000)
     }
 
   }
