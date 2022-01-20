@@ -1,17 +1,13 @@
-## Notes
+# React Commerce 🛒
+An e-commerce website built with React.
 
-#### Older React Version
-
+## Installation 🛠️
+Run
 ```
-"react": "^16.13.1",
-"react-dom": "^16.13.1",
-"react-scripts": "3.4.3",
+npm install
 ```
 
-#### Current React Version
-
-```
-"react": "^17.0.1",
-"react-dom": "^17.0.1",
-"react-scripts": "4.0.0",
-```
+The projects uses 3 environment variables, create `.env` file in the root with the following variables:
+`REACT_APP_AUTH_ID`: Fromt Auth0
+`REACT_APP_STRIPE_SECRET`: From Stripe
+`REACT_APP_STRIPE_PUB`: From Stripe
